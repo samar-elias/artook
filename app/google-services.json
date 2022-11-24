@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "618031766593",
+    "project_id": "artook-6a8ca",
+    "storage_bucket": "artook-6a8ca.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:618031766593:android:a47c8728992ab78ae77ac0",
+        "android_client_info": {
+          "package_name": "com.hudhudit.artook"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "618031766593-m2m3pu0l1oenkrk5s2r30t9h893e80d0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.hudhudit.artook",
+            "certificate_hash": "b44278d43d4404365cbf69dea4bd83794b33ce04"
+          }
+        },
+        {
+          "client_id": "618031766593-asp7kf7n0eit0u8au4rarsa702htid22.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBulXJrLGCdT5jhVTerOEeZLJki8e82mF4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "618031766593-asp7kf7n0eit0u8au4rarsa702htid22.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

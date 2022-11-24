@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/main_background"
+    tools:context=".views.main.profile.following.FollowingFragment">
+
+    <include
+        android:id="@+id/toolbar_layout"
+        layout="@layout/toolbar2_layout"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/followings_NSV"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/toolbar_layout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/followings_RV"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:listitem="@layout/profile_layout"
+            android:layout_marginStart="@dimen/_5sdp"
+            android:layout_marginEnd="@dimen/_5sdp"/>
+    </androidx.core.widget.NestedScrollView>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/no_followings"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/toolbar_layout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:gravity="center"
+        android:visibility="gone"
+        android:orientation="vertical"
+        android:padding="@dimen/_30sdp">
+        <ImageView
+            android:layout_width="@dimen/_50sdp"
+            android:layout_height="@dimen/_50sdp"
+            android:src="@drawable/report_icon"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/you_have_no_followings_yet"
+            android:fontFamily="@font/gill_sans_semibold"
+            android:textSize="@dimen/_17ssp"
+            android:textColor="@color/black"
+            android:layout_marginTop="@dimen/_30sdp"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/start_searching_for_great_people_and_add_them_to_your_following_list"
+            android:fontFamily="@font/gill_sans_regular"
+            android:textSize="@dimen/_13ssp"
+            android:textColor="@color/black"
+            android:layout_marginTop="@dimen/_10sdp"/>
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:indeterminateTint="@color/dark_purple"
+        android:visibility="gone"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

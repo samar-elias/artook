@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/navigation_home"
+        android:icon="@drawable/tab_home"
+        android:title="@string/home" />
+
+    <item
+        android:id="@+id/navigation_search"
+        android:icon="@drawable/tab_search"
+        android:title="@string/search"/>
+
+    <item
+        android:id="@+id/navigation_competition"
+        android:title=""/>
+
+    <item
+        android:id="@+id/navigation_videos_articles"
+        android:icon="@drawable/tab_videos_articles"
+        android:title="@string/videos_articles"/>
+
+    <item
+        android:id="@+id/navigation_profile"
+        android:icon="@drawable/tab_profile"
+        android:title="@string/profile"/>
+</menu>

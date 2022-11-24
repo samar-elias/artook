@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="@dimen/_15sdp">
+
+    <ImageView
+        android:id="@+id/navigate_back"
+        android:layout_width="@dimen/_25sdp"
+        android:layout_height="@dimen/_15sdp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:src="@drawable/navigate_back"
+        android:paddingEnd="@dimen/_17sdp"
+        android:visibility="gone"/>
+
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="@dimen/_100sdp"
+        android:layout_height="@dimen/_30sdp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toEndOf="@id/navigate_back"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:src="@drawable/horizontal_logo"/>
+
+    <ImageView
+        android:id="@+id/notifications"
+        android:layout_width="@dimen/_18sdp"
+        android:layout_height="@dimen/_18sdp"
+        app:layout_constraintTop_toTopOf="@id/new_post"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/new_post"
+        android:src="@drawable/notifications"/>
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/notifications_badge"
+        android:layout_width="@dimen/_5sdp"
+        android:layout_height="@dimen/_5sdp"
+        app:layout_constraintTop_toBottomOf="@id/notifications"
+        app:layout_constraintEnd_toEndOf="@id/notifications"
+        app:layout_constraintStart_toStartOf="@id/notifications"
+        android:src="@color/dark_red"
+        android:visibility="gone"
+        android:layout_marginTop="@dimen/_2sdp"/>
+
+    <ImageView
+        android:id="@+id/new_post"
+        android:layout_width="@dimen/_18sdp"
+        android:layout_height="@dimen/_18sdp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/notifications"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginEnd="@dimen/_15sdp"
+        android:src="@drawable/new_post"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

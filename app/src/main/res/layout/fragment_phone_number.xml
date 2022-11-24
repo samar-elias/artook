@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@color/black"
+    tools:context=".views.registration.forgotpassword.PhoneNumberFragment">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:background="@drawable/background"/>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/phone_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/_25sdp">
+            <ImageView
+                android:id="@+id/navigate_back"
+                android:layout_width="@dimen/_15sdp"
+                android:layout_height="@dimen/_15sdp"
+                android:src="@drawable/navigate_back"
+                app:tint="@color/white" />
+            <ImageView
+                android:layout_width="@dimen/_150sdp"
+                android:layout_height="@dimen/_150sdp"
+                android:src="@drawable/vertical_logo"
+                android:layout_gravity="center_horizontal"/>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/phone_number_layout"
+                style="@style/TextInputLayoutStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColorHint="@color/white"
+                app:counterTextColor="@color/white"
+                app:boxStrokeColor="@color/white"
+                app:boxStrokeWidth="@dimen/_1sdp"
+                app:boxCornerRadiusBottomEnd="@dimen/_8sdp"
+                app:boxCornerRadiusBottomStart="@dimen/_8sdp"
+                app:boxCornerRadiusTopEnd="@dimen/_8sdp"
+                app:boxCornerRadiusTopStart="@dimen/_8sdp"
+                android:layout_marginTop="@dimen/_50sdp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/phone_number_edt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/phone_number"
+                    android:imeOptions="actionDone"
+                    android:inputType="phone"
+                    android:textSize="@dimen/_12ssp"
+                    android:fontFamily="@font/gill_sans_regular"
+                    android:textColorHint="@color/white"
+                    android:textColor="@color/white"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/next"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:backgroundTint="@color/light_purple"
+                app:cornerRadius="@dimen/_15sdp"
+                android:text="@string/next"
+                android:textColor="@color/white"
+                android:textAllCaps="false"
+                android:fontFamily="@font/gill_sans_semibold"
+                android:textSize="@dimen/_13ssp"/>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+    </androidx.core.widget.NestedScrollView>
+
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:indeterminateTint="@color/dark_purple"
+        android:visibility="gone"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

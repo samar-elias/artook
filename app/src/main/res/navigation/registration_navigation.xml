@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/registration_navigation"
+    app:startDestination="@id/loginFragment">
+
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.hudhudit.artook.views.registration.login.LoginFragment"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login" >
+        <action
+            android:id="@+id/action_loginFragment_to_phoneNumberFragment"
+            app:destination="@id/phoneNumberFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_signUpFragment"
+            app:destination="@id/signUpFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/phoneNumberFragment"
+        android:name="com.hudhudit.artook.views.registration.forgotpassword.PhoneNumberFragment"
+        android:label="fragment_phone_number"
+        tools:layout="@layout/fragment_phone_number" >
+        <action
+            android:id="@+id/action_phoneNumberFragment_to_verificationFragment"
+            app:destination="@id/verificationFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/verificationFragment"
+        android:name="com.hudhudit.artook.views.registration.forgotpassword.VerificationFragment"
+        android:label="fragment_verification"
+        tools:layout="@layout/fragment_verification" >
+        <action
+            android:id="@+id/action_verificationFragment_to_resetPasswordFragment"
+            app:destination="@id/resetPasswordFragment" />
+        <argument
+            android:name="phoneNumber"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/resetPasswordFragment"
+        android:name="com.hudhudit.artook.views.registration.forgotpassword.ResetPasswordFragment"
+        android:label="fragment_reset_password"
+        tools:layout="@layout/fragment_reset_password" >
+        <argument
+            android:name="phoneNumber"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_resetPasswordFragment_to_loginFragment"
+            app:destination="@id/loginFragment"
+            app:popUpTo="@id/loginFragment"
+            app:popUpToInclusive="true"/>
+    </fragment>
+    <fragment
+        android:id="@+id/signUpFragment"
+        android:name="com.hudhudit.artook.views.registration.signup.SignUpFragment"
+        android:label="fragment_sign_up"
+        tools:layout="@layout/fragment_sign_up" >
+        <action
+            android:id="@+id/action_signUpFragment_to_signUpVerificationFragment"
+            app:destination="@id/signUpVerificationFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/signUpVerificationFragment"
+        android:name="com.hudhudit.artook.views.registration.signup.SignUpVerificationFragment"
+        android:label="fragment_sign_up_verification"
+        tools:layout="@layout/fragment_sign_up_verification" >
+        <argument
+            android:name="userObj"
+            app:argType="com.hudhudit.artook.apputils.modules.user.UserObj" />
+    </fragment>
+</navigation>
