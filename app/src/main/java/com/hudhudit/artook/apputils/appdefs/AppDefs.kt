@@ -3,7 +3,7 @@ package com.hudhudit.artook.apputils.appdefs
 import com.hudhudit.artook.apputils.modules.user.UserData
 import java.util.*
 
-class AppDefs {
+class AppDefs  {
     companion object{
         var SHARED_PREF_KEY = "SHARED_PREF"
         var ID_KEY = "ID"

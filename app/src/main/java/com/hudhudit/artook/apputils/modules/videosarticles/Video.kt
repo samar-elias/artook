@@ -3,7 +3,7 @@ package com.hudhudit.artook.apputils.modules.videosarticles
 import android.os.Parcelable
 import android.view.View
 import com.hudhudit.artook.apputils.modules.status.Status
-import kotlinx.parcelize.Parcelize
+import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class Video(val id: String,

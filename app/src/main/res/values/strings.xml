@@ -145,4 +145,13 @@
     <string name="media_type">Media Type</string>
     <string name="pictures">Pictures</string>
     <string name="already_participated">You have already participated in this contest</string>
+    <string name="just_now">Just now</string>
+    <string name="a_minute_ago">a minute ago</string>
+    <string name="minutes_ago">minutes ago</string>
+    <string name="hours_ago">hours ago</string>
+    <string name="yesterday">yesterday</string>
+    <string name="days_ago">days ago</string>
+    <string name="an_hour_ago">an hour ago</string>
+    <string name="tomorrow">Tomorrow</string>
+    <string name="today">Today</string>
 </resources>
