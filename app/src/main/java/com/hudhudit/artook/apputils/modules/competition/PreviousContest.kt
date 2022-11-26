@@ -2,7 +2,8 @@ package com.hudhudit.artook.apputils.modules.competition
 
 import android.os.Parcelable
 import com.hudhudit.artook.apputils.modules.status.Status
-import kotlinx.parcelize.Parcelize
+import kotlinx.android.parcel.Parcelize
+
 
 @Parcelize
 data class PreviousContest(val id: String,

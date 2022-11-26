@@ -19,7 +19,11 @@
         android:id="@+id/navigation_search"
         android:name="com.hudhudit.artook.views.main.search.SearchFragment"
         android:label="fragment_search"
-        tools:layout="@layout/fragment_search" />
+        tools:layout="@layout/fragment_search" >
+        <action
+            android:id="@+id/action_navigation_search_to_userProfileFragment2"
+            app:destination="@id/userProfileFragment2" />
+    </fragment>
     <fragment
         android:id="@+id/navigation_videos_articles"
         android:name="com.hudhudit.artook.views.main.videosarticles.VideosArticlesFragment"
@@ -30,4 +34,18 @@
         android:name="com.hudhudit.artook.views.main.competition.CompetitionFragment"
         android:label="fragment_competition"
         tools:layout="@layout/fragment_competition" />
+    <fragment
+        android:id="@+id/userProfileFragment2"
+        android:name="com.hudhudit.artook.views.main.profile.userprofile.UserProfileFragment"
+        android:label="fragment_user_profile"
+        tools:layout="@layout/fragment_user_profile" >
+        <action
+            android:id="@+id/action_userProfileFragment2_to_conversationFragment2"
+            app:destination="@id/conversationFragment2" />
+    </fragment>
+    <fragment
+        android:id="@+id/conversationFragment2"
+        android:name="com.hudhudit.artook.views.main.chats.conversation.ConversationFragment"
+        android:label="fragment_conversation"
+        tools:layout="@layout/fragment_conversation" />
 </navigation>

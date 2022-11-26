@@ -97,6 +97,23 @@
         <entry key="..\:/Samar Files/Art Studio application/ArtStudio/app/src/main/res/menu/menu.xml" value="0.18385416666666668" />
         <entry key="..\:/Samar Files/Art Studio application/ArtStudio/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1" />
         <entry key="..\:/Samar Files/Art Studio application/ArtStudio/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.1" />
+        <entry key="..\:/Users/user1/Documents/GitHub/artook/app/src/main/res/drawable/purple_message.xml" value="0.177" />
+        <entry key="..\:/Users/user1/Documents/GitHub/artook/app/src/main/res/layout/conversation_layout.xml" value="0.2427536231884058" />
+        <entry key="..\:/Users/user1/Documents/GitHub/artook/app/src/main/res/layout/fragment_chats.xml" value="0.4" />
+        <entry key="..\:/Users/user1/Documents/GitHub/artook/app/src/main/res/layout/fragment_conversation.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/user1/Documents/GitHub/artook/app/src/main/res/layout/fragment_new_post.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/user1/Documents/GitHub/artook/app/src/main/res/layout/fragment_participate.xml" value="0.6" />
+        <entry key="..\:/Users/user1/Documents/GitHub/artook/app/src/main/res/layout/fragment_phone_number.xml" value="0.1526268115942029" />
+        <entry key="..\:/Users/user1/Documents/GitHub/artook/app/src/main/res/layout/fragment_profile.xml" value="0.45294117647058824" />
+        <entry key="..\:/Users/user1/Documents/GitHub/artook/app/src/main/res/layout/fragment_search.xml" value="0.4" />
+        <entry key="..\:/Users/user1/Documents/GitHub/artook/app/src/main/res/layout/fragment_search_by_category.xml" value="0.12360688956433637" />
+        <entry key="..\:/Users/user1/Documents/GitHub/artook/app/src/main/res/layout/fragment_user_profile.xml" value="0.15581854043392504" />
+        <entry key="..\:/Users/user1/Documents/GitHub/artook/app/src/main/res/layout/receive_message_layout.xml" value="0.2427536231884058" />
+        <entry key="..\:/Users/user1/Documents/GitHub/artook/app/src/main/res/layout/row_conversation.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/user1/Documents/GitHub/artook/app/src/main/res/layout/row_resived.xml" value="0.2427536231884058" />
+        <entry key="..\:/Users/user1/Documents/GitHub/artook/app/src/main/res/layout/row_send.xml" value="0.2427536231884058" />
+        <entry key="..\:/Users/user1/Documents/GitHub/artook/app/src/main/res/layout/send_message_layout.xml" value="0.2427536231884058" />
+        <entry key="..\:/Users/user1/Documents/GitHub/artook/app/src/main/res/layout/toolbar2_layout.xml" value="0.20416666666666666" />
       </map>
     </option>
   </component>

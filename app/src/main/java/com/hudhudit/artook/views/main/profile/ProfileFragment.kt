@@ -31,6 +31,8 @@ import com.hudhudit.artook.views.main.profile.edit.EditProfileFragment
 import com.hudhudit.artook.views.main.profile.followers.FollowersFragment
 import com.hudhudit.artook.views.main.profile.following.FollowingFragment
 import com.hudhudit.artook.databinding.FragmentProfileBinding
+import com.hudhudit.artook.views.main.chats.ChatsFragment
+import com.hudhudit.artook.views.main.chats.conversation.ConversationFragment
 import dagger.hilt.android.AndroidEntryPoint
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -117,7 +119,18 @@ class ProfileFragment : Fragment() {
             getProfileCounts()
             binding.refreshLayout.isRefreshing = false
         }
+        binding.chatsBtn.setOnClickListener {
+            openChat()
+        }
 
+    }
+    private fun openChat(){
+        val fragment: Fragment = ChatsFragment()
+        val fragmentManager: FragmentManager = mainActivity.supportFragmentManager
+        val fragmentTransaction: FragmentTransaction = fragmentManager.beginTransaction()
+        fragmentTransaction.replace(R.id.container, fragment)
+        fragmentTransaction.addToBackStack("chat")
+        fragmentTransaction.commit()
     }
 
     private fun setData(){

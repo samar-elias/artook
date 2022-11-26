@@ -44,6 +44,7 @@ import java.util.zip.GZIPOutputStream
 import android.os.Environment
 
 import androidx.exifinterface.media.ExifInterface
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
 
 
 @AndroidEntryPoint
@@ -111,7 +112,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun createRequestBody(parameter: String?): RequestBody? {
-        return RequestBody.create(MediaType.parse("multipart/form-data"), parameter)
+        return RequestBody.create("multipart/form-data".toMediaTypeOrNull(), parameter!!)
     }
 
     fun createMultipartBodyPart(name: String?, imagePath: String?): MultipartBody.Part? {
@@ -119,12 +120,12 @@ class MainActivity : AppCompatActivity() {
             return null
         }
         val imageFile = File(imagePath)
-        val requestBody = RequestBody.create(MediaType.parse("multipart/form-data"), imageFile)
+        val requestBody = RequestBody.create("multipart/form-data".toMediaTypeOrNull(), imageFile)
 
         // MultipartBody.Part is used to send also the actual file name
         return try {
             MultipartBody.Part.createFormData(
-                name,
+                name!!,
                 URLEncoder.encode(imageFile.name, "utf-8"),
                 requestBody
             )
@@ -141,8 +142,7 @@ class MainActivity : AppCompatActivity() {
             // 1. Create File using image url (String)
             val file = File(selectedUris.get(i))
             // 2. Create requestBody by using multipart/form-data MediaType from file
-            val requestFile: RequestBody = RequestBody.create(MediaType.parse
-                ("multipart/form-data"), file)
+            val requestFile: RequestBody = RequestBody.create("multipart/form-data".toMediaTypeOrNull(), file)
             // 3. Finally, Create MultipartBody using MultipartBody.Part.createFormData
             val body: MultipartBody.Part = MultipartBody.Part.createFormData(
                 name, file.name.trim(), requestFile)
@@ -212,6 +212,7 @@ class MainActivity : AppCompatActivity() {
 //        return compressed
 //    }
 
+
     fun compress(string: String): String? {
         var compressedString: String? = null
         try {
@@ -260,6 +261,23 @@ class MainActivity : AppCompatActivity() {
             cursor.moveToFirst()
             cursor.getString(column_index)
         } else null
+    }
+    fun encoder1(imagePath: String?): String? {
+        var base64Image = ""
+        val file = File(imagePath)
+        try {
+            FileInputStream(file).use { imageInFile ->
+                // Reading a Image file from file system
+                val imageData = ByteArray(file.length().toInt())
+                imageInFile.read(imageData)
+                base64Image = Base64.encodeToString(imageData, 0)
+            }
+        } catch (e: FileNotFoundException) {
+            println("Image not found$e")
+        } catch (ioe: IOException) {
+            println("Exception while reading the Image $ioe")
+        }
+        return base64Image
     }
 
     fun invisibleBottomBar(){
