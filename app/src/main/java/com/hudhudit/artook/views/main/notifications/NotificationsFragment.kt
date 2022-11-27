@@ -88,6 +88,7 @@ class NotificationsFragment : Fragment() {
     }
 
     private fun getNotifications(){
+
         binding.progressBar.visibility = View.VISIBLE
         val okHttpClient = OkHttpClient.Builder().apply {
             addInterceptor(
