@@ -262,7 +262,7 @@ class CompetitionFragment : Fragment() {
         val fragmentManager: FragmentManager = mainActivity.supportFragmentManager
         val fragmentTransaction: FragmentTransaction = fragmentManager.beginTransaction()
         val bundle = Bundle()
-        bundle.putParcelable("previousContest", previousContest)
+        bundle.putString("previousContest", previousContest.id)
         bundle.putInt("position", position)
         fragment.arguments = bundle
         fragmentTransaction.replace(R.id.container, fragment)

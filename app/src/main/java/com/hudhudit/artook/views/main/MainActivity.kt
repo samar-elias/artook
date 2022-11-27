@@ -44,6 +44,7 @@ import java.util.zip.GZIPOutputStream
 import android.os.Environment
 
 import androidx.exifinterface.media.ExifInterface
+import com.google.firebase.FirebaseApp
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 
 
@@ -62,6 +63,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        FirebaseApp.initializeApp(this)
 
         bottomNavigationView = findViewById(R.id.bottom_nav_bar)
         bottomNavigationLayout = findViewById(R.id.bottom_nav_layout)

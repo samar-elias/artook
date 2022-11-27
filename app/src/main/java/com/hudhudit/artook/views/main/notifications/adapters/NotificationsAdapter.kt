@@ -44,7 +44,13 @@ class NotificationsAdapter(
         }
 
         holder.delete.setOnClickListener { notificationsFragment.deleteNotification(notification.id) }
-        holder.itemView.setOnClickListener { notificationsFragment.readNotification(notification.id) }
+        holder.itemView.setOnClickListener {
+            if (notification.is_seen == "0"){
+                notificationsFragment.readNotification(notification)
+            }else{
+                notificationsFragment.openNotification(notification)
+            }
+        }
     }
 
     override fun getItemCount(): Int {

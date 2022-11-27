@@ -6,7 +6,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.widget.NestedScrollView
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -18,9 +21,14 @@ import com.hudhudit.artook.apputils.modules.notification.NotificationsResult
 import com.hudhudit.artook.apputils.modules.user.UserData
 import com.hudhudit.artook.apputils.remote.RetrofitAPIs
 import com.hudhudit.artook.R
+import com.hudhudit.artook.apputils.modules.competition.PreviousContest
+import com.hudhudit.artook.apputils.modules.post.Post
 import com.hudhudit.artook.views.main.MainActivity
 import com.hudhudit.artook.views.main.notifications.adapters.NotificationsAdapter
 import com.hudhudit.artook.databinding.FragmentNotificationsBinding
+import com.hudhudit.artook.views.main.comments.CommentsFragment
+import com.hudhudit.artook.views.main.competition.previouscompetition.PreviousCompetitionDetailsFragment
+import com.hudhudit.artook.views.main.profile.userprofile.UserProfileFragment
 import dagger.hilt.android.AndroidEntryPoint
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -61,6 +69,7 @@ class NotificationsFragment : Fragment() {
         onClick()
         getNotifications()
         notifications.clear()
+        page = 1
     }
 
     private fun init(){
@@ -114,8 +123,10 @@ class NotificationsFragment : Fragment() {
             override fun onFailure(call: Call<NotificationsResult>, t: Throwable) {
                 binding.progressBar.visibility = View.GONE
 //                //Toast.makeText(mainActivity, resources.getString(R.string.internet_connection), Toast.LENGTH_SHORT).show()
-                binding.notificationsNCS.visibility = View.GONE
-                binding.noNotifications.visibility = View.VISIBLE
+                if (notifications.size == 0){
+                    binding.notificationsNCS.visibility = View.GONE
+                    binding.noNotifications.visibility = View.VISIBLE
+                }
             }
 
         })
@@ -169,7 +180,7 @@ class NotificationsFragment : Fragment() {
         })
     }
 
-    fun readNotification(id: String){
+    fun readNotification(notification: Notification){
         binding.progressBar.visibility = View.VISIBLE
         val okHttpClient = OkHttpClient.Builder().apply {
             addInterceptor(
@@ -185,17 +196,21 @@ class NotificationsFragment : Fragment() {
         val retrofit: Retrofit = Retrofit.Builder().baseUrl(Urls.BASE_URL).client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create()).build()
         val notificationsCall: Call<BooleanResponse> =
-            retrofit.create(RetrofitAPIs::class.java).readNotification(id)
+            retrofit.create(RetrofitAPIs::class.java).readNotification(notification.id)
         notificationsCall.enqueue(object : Callback<BooleanResponse> {
             override fun onResponse(call: Call<BooleanResponse>, response: Response<BooleanResponse>) {
                 if (response.isSuccessful){
-                    notifications.clear()
-                    getNotifications()
+                    if (notification.data_id != "0"){
+                        openNotification(notification)
+                    }else{
+                        notifications.clear()
+                        getNotifications()
+                    }
                 }else{
                     val gson = Gson()
-                    val type = object : TypeToken<UserData>() {}.type //ErrorResponse is the data class that matches the error response
-                    val errorResponse = gson.fromJson<UserData>(response.errorBody()!!.charStream(), type) // errorResponse is an instance of ErrorResponse that will contain details about the error
-//                    Toast.makeText(mainActivity, errorResponse.status.massage.toString(), Toast.LENGTH_SHORT).show()
+                    val type = object : TypeToken<BooleanResponse>() {}.type //ErrorResponse is the data class that matches the error response
+                    val errorResponse = gson.fromJson<BooleanResponse>(response.errorBody()!!.charStream(), type) // errorResponse is an instance of ErrorResponse that will contain details about the error
+                    Toast.makeText(mainActivity, errorResponse.status.massage.toString(), Toast.LENGTH_SHORT).show()
                 }
             }
 
@@ -207,5 +222,56 @@ class NotificationsFragment : Fragment() {
             }
 
         })
+    }
+
+    fun openNotification(notification: Notification){
+        when (notification.page_id) {
+            "profile" -> {
+                navigateToMyUserProfile(notification.data_id)
+            }
+            "post" -> {
+                openPost(notification.data_id)
+            }
+            "contests" -> {
+                openPreviousContest(notification.data_id)
+            }
+        }
+    }
+
+    fun navigateToMyUserProfile(id: String){
+        val fragment: Fragment = UserProfileFragment()
+        val fragmentManager: FragmentManager = mainActivity.supportFragmentManager
+        val fragmentTransaction: FragmentTransaction = fragmentManager.beginTransaction()
+        val bundle = Bundle()
+        bundle.putString("clientId", id)
+        fragment.arguments = bundle
+        fragmentTransaction.replace(R.id.container, fragment)
+        fragmentTransaction.addToBackStack("UserProfile")
+        fragmentTransaction.commit()
+    }
+
+    private fun openPost(id: String) {
+        val fragment: Fragment = CommentsFragment()
+        val fragmentManager: FragmentManager = mainActivity.supportFragmentManager
+        val fragmentTransaction: FragmentTransaction = fragmentManager.beginTransaction()
+        val bundle = Bundle()
+        bundle.putString("postId", id)
+        fragment.arguments = bundle
+        fragmentTransaction.replace(R.id.container, fragment)
+        fragmentTransaction.addToBackStack("Post")
+        fragmentTransaction.commit()
+    }
+
+    private fun openPreviousContest(id: String){
+        val fragment: Fragment = PreviousCompetitionDetailsFragment()
+        val fragmentManager: FragmentManager = mainActivity.supportFragmentManager
+        val fragmentTransaction: FragmentTransaction = fragmentManager.beginTransaction()
+        val bundle = Bundle()
+        bundle.putString("previousContest", id)
+        bundle.putInt("position", 0)
+        fragment.arguments = bundle
+        fragmentTransaction.replace(R.id.container, fragment)
+        fragmentTransaction.addToBackStack("Details")
+        fragmentTransaction.commit()
     }
 }

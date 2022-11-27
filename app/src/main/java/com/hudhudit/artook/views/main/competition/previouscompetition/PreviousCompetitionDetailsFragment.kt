@@ -13,12 +13,9 @@ import com.google.gson.reflect.TypeToken
 import com.hudhudit.artook.apputils.appdefs.AppDefs
 import com.hudhudit.artook.apputils.appdefs.Urls
 import com.hudhudit.artook.apputils.modules.booleanresponse.BooleanResponse
-import com.hudhudit.artook.apputils.modules.competition.PreviousContest
-import com.hudhudit.artook.apputils.modules.competition.Winner
-import com.hudhudit.artook.apputils.modules.competition.WinnersResult
 import com.hudhudit.artook.apputils.remote.RetrofitAPIs
 import com.hudhudit.artook.R
-import com.hudhudit.artook.apputils.modules.competition.Participant
+import com.hudhudit.artook.apputils.modules.competition.*
 import com.hudhudit.artook.views.main.competition.previouscompetition.adapters.WinnersAdapter
 import com.hudhudit.artook.views.main.MainActivity
 import com.hudhudit.artook.databinding.FragmentPreviousCompetitionDetailsBinding
@@ -36,6 +33,7 @@ class PreviousCompetitionDetailsFragment : Fragment() {
 
     lateinit var binding: FragmentPreviousCompetitionDetailsBinding
     lateinit var mainActivity: MainActivity
+    lateinit var previousContestId: String
     lateinit var previousContest: PreviousContest
     var position: Int = 0
     var page = 1
@@ -66,14 +64,54 @@ class PreviousCompetitionDetailsFragment : Fragment() {
 
     private fun init(){
         binding.toolbarLayout.title.text = resources.getString(R.string.details)
-        previousContest = requireArguments().getParcelable("previousContest")!!
+        previousContestId = requireArguments().getString("previousContest")!!
         position = requireArguments().getInt("position")
-        setData()
+        getContestById(previousContestId)
     }
 
     private fun onClick(){
         binding.toolbarLayout.navigateBack.setOnClickListener { mainActivity.supportFragmentManager.popBackStack() }
         binding.close.setOnClickListener { binding.detailsLayout.visibility = View.GONE }
+    }
+
+    private fun getContestById(id: String){
+        binding.progressBar.visibility = View.VISIBLE
+        val okHttpClient = OkHttpClient.Builder().apply {
+            addInterceptor(
+                Interceptor { chain ->
+                    val builder = chain.request().newBuilder()
+                    builder.header("Content-Type", "application/json; charset=UTF-8")
+                    builder.header("Authorization", AppDefs.user.token!!)
+                    builder.header("Lang", AppDefs.lang!!)
+                    return@Interceptor chain.proceed(builder.build())
+                }
+            )
+        }.build()
+        val retrofit: Retrofit = Retrofit.Builder().baseUrl(Urls.BASE_URL).client(okHttpClient)
+            .addConverterFactory(GsonConverterFactory.create()).build()
+        val previousContestsCall: Call<PreviousContestResult> =
+            retrofit.create(RetrofitAPIs::class.java).getContestById(id)
+        previousContestsCall.enqueue(object : Callback<PreviousContestResult> {
+            override fun onResponse(call: Call<PreviousContestResult>, response: Response<PreviousContestResult>) {
+                binding.progressBar.visibility = View.GONE
+                if (response.isSuccessful){
+                    previousContest = response.body()!!.results
+                    setData()
+                }else{
+                    val gson = Gson()
+                    val type = object : TypeToken<BooleanResponse>() {}.type //ErrorResponse is the data class that matches the error response
+                    val errorResponse = gson.fromJson<BooleanResponse>(response.errorBody()!!.charStream(), type) // errorResponse is an instance of ErrorResponse that will contain details about the error
+//                    Toast.makeText(mainActivity, errorResponse.status.massage.toString(), Toast.LENGTH_SHORT).show()
+                }
+            }
+
+            override fun onFailure(call: Call<PreviousContestResult>, t: Throwable) {
+                binding.progressBar.visibility = View.GONE
+                //Toast.makeText(mainActivity, resources.getString(R.string.internet_connection), Toast.LENGTH_SHORT).show()
+
+            }
+
+        })
     }
 
     private fun setData(){

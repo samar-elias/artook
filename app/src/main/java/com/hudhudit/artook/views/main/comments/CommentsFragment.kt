@@ -56,6 +56,7 @@ class CommentsFragment : Fragment() {
     lateinit var mainActivity: MainActivity
     var comments: ArrayList<Comment> = ArrayList()
     lateinit var post: Post
+    var postId: String? = null
     var page = 1
     var isMyPost = false
     var isOptionsOpen = false
@@ -83,9 +84,7 @@ class CommentsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         init()
         onClick()
-        setData()
-        getComments()
-        comments.clear()
+
     }
 
     private fun init(){
@@ -93,17 +92,26 @@ class CommentsFragment : Fragment() {
         val mSnapHelper: SnapHelper = PagerSnapHelper()
         mSnapHelper.attachToRecyclerView(binding.postLayout.mediaRV)
         binding.toolbarLayout.title.text = resources.getString(R.string.comments)
-        post = requireArguments().getParcelable("post")!!
-        isMyPost = post.client_id == AppDefs.user.results!!.id
-        if (isMyPost){
-            binding.postLayout.optionsLayout.visibility = View.GONE
-            binding.postLayout.report.visibility = View.GONE
-            binding.postLayout.options.visibility = View.VISIBLE
+        postId = requireArguments().getString("postId")
+
+        if (postId != null){
+            getPostById(postId!!)
         }else{
-            binding.postLayout.optionsLayout.visibility = View.GONE
-            binding.postLayout.report.visibility = View.VISIBLE
-            binding.postLayout.options.visibility = View.GONE
+            isMyPost = post.client_id == AppDefs.user.results!!.id
+            if (isMyPost){
+                binding.postLayout.optionsLayout.visibility = View.GONE
+                binding.postLayout.report.visibility = View.GONE
+                binding.postLayout.options.visibility = View.VISIBLE
+            }else{
+                binding.postLayout.optionsLayout.visibility = View.GONE
+                binding.postLayout.report.visibility = View.VISIBLE
+                binding.postLayout.options.visibility = View.GONE
+            }
+            setData()
+            comments.clear()
+            getComments()
         }
+
         mainActivity.invisibleBottomBar()
     }
 
@@ -663,6 +671,58 @@ class CommentsFragment : Fragment() {
                 if (response.isSuccessful){
                     post = response.body()!!.results
                     setData()
+                }else{
+                    val gson = Gson()
+                    val type = object : TypeToken<PostResult>() {}.type //ErrorResponse is the data class that matches the error response
+                    val errorResponse = gson.fromJson<PostResult>(response.errorBody()!!.charStream(), type) // errorResponse is an instance of ErrorResponse that will contain details about the error
+//                    Toast.makeText(mainActivity, errorResponse.status.massage.toString(), Toast.LENGTH_SHORT).show()
+
+                }
+            }
+
+            override fun onFailure(call: Call<PostResult>, t: Throwable) {
+                binding.progressBar.visibility = View.GONE
+                //Toast.makeText(mainActivity, resources.getString(R.string.internet_connection), Toast.LENGTH_SHORT).show()
+
+            }
+
+        })
+    }
+
+    private fun getPostById(id: String){
+        binding.progressBar.visibility = View.VISIBLE
+        val okHttpClient = OkHttpClient.Builder().apply {
+            addInterceptor(
+                Interceptor { chain ->
+                    val builder = chain.request().newBuilder()
+                    builder.header("Content-Type", "application/json; charset=UTF-8")
+                    builder.header("Authorization", AppDefs.user.token!!)
+                    return@Interceptor chain.proceed(builder.build())
+                }
+            )
+        }.build()
+        val retrofit: Retrofit = Retrofit.Builder().baseUrl(Urls.BASE_URL).client(okHttpClient)
+            .addConverterFactory(GsonConverterFactory.create()).build()
+        val reportCall: Call<PostResult> =
+            retrofit.create(RetrofitAPIs::class.java).getPostById(id)
+        reportCall.enqueue(object : Callback<PostResult> {
+            override fun onResponse(call: Call<PostResult>, response: Response<PostResult>) {
+                binding.progressBar.visibility = View.GONE
+                if (response.isSuccessful){
+                    post = response.body()!!.results
+                    isMyPost = post.client_id == AppDefs.user.results!!.id
+                    if (isMyPost){
+                        binding.postLayout.optionsLayout.visibility = View.GONE
+                        binding.postLayout.report.visibility = View.GONE
+                        binding.postLayout.options.visibility = View.VISIBLE
+                    }else{
+                        binding.postLayout.optionsLayout.visibility = View.GONE
+                        binding.postLayout.report.visibility = View.VISIBLE
+                        binding.postLayout.options.visibility = View.GONE
+                    }
+                    setData()
+                    comments.clear()
+                    getComments()
                 }else{
                     val gson = Gson()
                     val type = object : TypeToken<PostResult>() {}.type //ErrorResponse is the data class that matches the error response
