@@ -108,7 +108,7 @@ class NotificationsFragment : Fragment() {
             override fun onResponse(call: Call<NotificationsResult>, response: Response<NotificationsResult>) {
                 binding.progressBar.visibility = View.GONE
                 if (response.isSuccessful){
-                    for (notification in response.body()!!.results!!.data){
+                    for (notification in response.body()!!.results.data){
                         notifications.add(notification)
                     }
                     setNotificationsRV()
