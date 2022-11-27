@@ -7,4 +7,6 @@ data class Notification(val id: String,
                         val is_seen: String,
                         val image_client: String,
                         val time: String,
+                        val data_id: String,
+                        val page_id: String,
                         val status: String)

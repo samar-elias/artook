@@ -19,3 +19,6 @@ data class PreviousContests(val count: String,
 
 data class PreviousContestsResult(val status: Status,
                                   val results: PreviousContests)
+
+data class PreviousContestResult(val status: Status,
+                                  val results: PreviousContest)

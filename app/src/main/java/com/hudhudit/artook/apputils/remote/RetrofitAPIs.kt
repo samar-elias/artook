@@ -268,6 +268,9 @@ interface RetrofitAPIs {
     @GET("get_all_contests")
     fun getPreviousContests(@Query("page") page: String): Call<PreviousContestsResult>
 
+    @GET("get_contest_by_id")
+    fun getContestById(@Query("id") id: String): Call<PreviousContestResult>
+
     @FormUrlEncoded
     @POST("get_contests_winners")
     fun getWinners(

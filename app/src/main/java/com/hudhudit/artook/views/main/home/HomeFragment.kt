@@ -523,7 +523,7 @@ class HomeFragment : Fragment() {
             val fragmentManager: FragmentManager = mainActivity.supportFragmentManager
             val fragmentTransaction: FragmentTransaction = fragmentManager.beginTransaction()
             val bundle = Bundle()
-            bundle.putParcelable("post", post)
+            bundle.putString("postId", post.id)
             fragment.arguments = bundle
             fragmentTransaction.replace(R.id.container, fragment)
             fragmentTransaction.addToBackStack("Post")
