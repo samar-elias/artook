@@ -67,6 +67,11 @@ class PreviousCompetitionDetailsFragment : Fragment() {
         previousContestId = requireArguments().getString("previousContest")!!
         position = requireArguments().getInt("position")
         getContestById(previousContestId)
+        if (AppDefs.lang == "ar"){
+            binding.toolbarLayout.navigateBack.scaleX = (-1).toFloat()
+        }else{
+            binding.toolbarLayout.navigateBack.scaleX = (1).toFloat()
+        }
     }
 
     private fun onClick(){

@@ -101,6 +101,11 @@ class SignUpVerificationFragment : Fragment() {
     }
 
     private fun onClick(){
+        if (AppDefs.lang == "ar"){
+            binding.navigateBack.scaleX = (-1).toFloat()
+        }else{
+            binding.navigateBack.scaleX = (1).toFloat()
+        }
         binding.verificationLayout.setOnClickListener { registrationActivity.hideKeyboard() }
         binding.navigateBack.setOnClickListener { navController.popBackStack() }
         binding.register.setOnClickListener {

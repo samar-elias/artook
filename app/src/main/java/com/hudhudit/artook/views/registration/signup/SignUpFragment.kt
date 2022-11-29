@@ -92,6 +92,8 @@ class SignUpFragment : Fragment() {
             override fun onTextChanged(s: CharSequence, start: Int,
                                        before: Int, count: Int) {
                 if (s.contains(" ")){
+//                    s.replace(" ", "")
+//                    binding.userNameEdt.text.replace(" ", "")
                     binding.userNameEdt.error = resources.getString(R.string.username_invalid_format)
                 }
             }

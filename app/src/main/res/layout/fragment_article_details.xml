@@ -58,6 +58,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 tools:text="Article Title"
+                android:textAlignment="viewStart"
                 android:fontFamily="@font/gill_sans_semibold"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_12ssp"/>
@@ -66,6 +67,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 tools:text="11 Oct 2022"
+                android:textAlignment="viewStart"
                 android:fontFamily="@font/gill_sans_regular"
                 android:textColor="@color/dark_gray"
                 android:textSize="@dimen/_7ssp"/>
@@ -86,6 +88,7 @@ The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for t
                     android:fontFamily="@font/gill_sans_regular"
                     android:textColor="@color/black"
                     android:layout_marginTop="@dimen/_10sdp"
+                    android:textAlignment="viewStart"
                     android:textSize="@dimen/_10ssp"/>
             </androidx.appcompat.widget.LinearLayoutCompat>
         </androidx.constraintlayout.widget.ConstraintLayout>

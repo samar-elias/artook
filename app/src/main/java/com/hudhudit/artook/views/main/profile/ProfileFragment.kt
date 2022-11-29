@@ -75,6 +75,12 @@ class ProfileFragment : Fragment() {
         setData()
         getProfileCounts()
         mainActivity.visibleBottomBar()
+        AppDefs.media1Uri = null
+        AppDefs.media2Uri = null
+        AppDefs.media3Uri = null
+        AppDefs.media4Uri = null
+        AppDefs.media5Uri = null
+        AppDefs.media6Uri = null
     }
 
     private fun onClick(){

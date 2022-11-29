@@ -66,6 +66,7 @@
                     android:imeOptions="actionDone"
                     android:inputType="phone"
                     android:textSize="@dimen/_12ssp"
+                    android:textAlignment="viewStart"
                     android:fontFamily="@font/gill_sans_regular"
                     android:textColorHint="@color/white"
                     android:textColor="@color/white"/>

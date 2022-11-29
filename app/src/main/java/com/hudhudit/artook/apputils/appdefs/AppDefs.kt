@@ -1,5 +1,6 @@
 package com.hudhudit.artook.apputils.appdefs
 
+import android.net.Uri
 import com.hudhudit.artook.apputils.modules.user.UserData
 import java.util.*
 
@@ -13,7 +14,12 @@ class AppDefs  {
         const val INBOX_PATH = "chatroom"
         const val USER_PATH = "users"
         var isFeed = true
-
+        var media1Uri: Uri? = null
+        var media2Uri: Uri? = null
+        var media3Uri: Uri? = null
+        var media4Uri: Uri? = null
+        var media5Uri: Uri? = null
+        var media6Uri: Uri? = null
         lateinit var user: UserData
 
         @JvmName("getLanguage1")

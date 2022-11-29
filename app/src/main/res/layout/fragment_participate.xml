@@ -114,6 +114,7 @@
                     android:hint="@string/description"
                     android:imeOptions="actionDone"
                     android:inputType="text"
+                    android:textAlignment="viewStart"
                     android:textSize="@dimen/_13ssp"
                     android:fontFamily="@font/gill_sans_regular"
                     android:textColorHint="@color/white"

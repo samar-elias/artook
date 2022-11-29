@@ -59,6 +59,7 @@
                 android:text="@string/upload_media"
                 android:fontFamily="@font/gill_sans_bold"
                 android:textColor="@color/black"
+                android:textAlignment="viewStart"
                 android:textSize="@dimen/_20ssp" />
             <TextView
                 android:layout_width="wrap_content"
@@ -66,6 +67,7 @@
                 android:text="@string/first_upload_pictures_and_videos_to_your_post_you_can_upload_up_to_6_media_contents"
                 android:fontFamily="@font/gill_sans_regular"
                 android:textColor="@color/black"
+                android:textAlignment="viewStart"
                 android:textSize="@dimen/_12ssp"
                 android:layout_marginTop="@dimen/_10sdp"/>
             <androidx.appcompat.widget.LinearLayoutCompat
@@ -107,6 +109,7 @@
                 </com.google.android.material.card.MaterialCardView>
 
                 <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/media2_CV"
                     android:layout_width="0dp"
                     android:layout_height="@dimen/_90sdp"
                     android:layout_weight="1"
@@ -144,6 +147,7 @@
                 android:weightSum="2"
                 android:layout_marginTop="@dimen/_15sdp">
                 <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/media3_CV"
                     android:layout_width="0dp"
                     android:layout_height="@dimen/_90sdp"
                     android:layout_weight="1"
@@ -175,6 +179,7 @@
                 </com.google.android.material.card.MaterialCardView>
 
                 <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/media4_CV"
                     android:layout_width="0dp"
                     android:layout_height="@dimen/_90sdp"
                     android:layout_weight="1"
@@ -212,6 +217,7 @@
                 android:weightSum="2"
                 android:layout_marginTop="@dimen/_15sdp">
                 <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/media5_CV"
                     android:layout_width="0dp"
                     android:layout_height="@dimen/_90sdp"
                     android:layout_weight="1"
@@ -243,6 +249,7 @@
                 </com.google.android.material.card.MaterialCardView>
 
                 <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/media6_CV"
                     android:layout_width="0dp"
                     android:layout_height="@dimen/_90sdp"
                     android:layout_weight="1"
@@ -287,5 +294,16 @@
                 android:textSize="@dimen/_14ssp"/>
         </androidx.appcompat.widget.LinearLayoutCompat>
     </androidx.core.widget.NestedScrollView>
+
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:indeterminateTint="@color/dark_purple"
+        android:visibility="gone"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

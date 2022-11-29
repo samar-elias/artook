@@ -84,6 +84,12 @@ class VideosArticlesFragment : Fragment() {
         if (getData){
             getVideos()
         }
+        AppDefs.media1Uri = null
+        AppDefs.media2Uri = null
+        AppDefs.media3Uri = null
+        AppDefs.media4Uri = null
+        AppDefs.media5Uri = null
+        AppDefs.media6Uri = null
     }
 
     private fun onClick(){
@@ -243,8 +249,8 @@ class VideosArticlesFragment : Fragment() {
             override fun onResponse(call: Call<VideosArticlesCountResult>, response: Response<VideosArticlesCountResult>) {
                 binding.progressBar.visibility = View.GONE
                 if (response.isSuccessful){
-                    binding.videosCount.text = response.body()!!.results.no_video+" "+resources.getString(R.string.videos)
-                    binding.articlesCount.text = response.body()!!.results.no_articles+" "+resources.getString(R.string.articles)
+                    binding.videosCount.text = response.body()!!.results.no_video+" "+resources.getString(R.string.video)
+                    binding.articlesCount.text = response.body()!!.results.no_articles+" "+resources.getString(R.string.article)
                 }else{
                     val gson = Gson()
                     val type = object : TypeToken<UserData>() {}.type //ErrorResponse is the data class that matches the error response

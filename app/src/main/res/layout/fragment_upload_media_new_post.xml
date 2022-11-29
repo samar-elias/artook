@@ -6,15 +6,37 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/main_background"
-    tools:context=".views.main.newpost.NewPostDetailsFragment">
+    tools:context=".views.main.newpost.UploadMediaNewPostFragment">
 
-
-    <include
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/toolbar_layout"
-        layout="@layout/toolbar2_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        android:padding="@dimen/_15sdp">
+        <ImageView
+            android:id="@+id/close"
+            android:layout_width="@dimen/_20sdp"
+            android:layout_height="@dimen/_20sdp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:src="@drawable/close_black"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toEndOf="@id/close"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:gravity="center_horizontal"
+            android:text="@string/new_post"
+            android:fontFamily="@font/gill_sans_semibold"
+            android:textColor="@color/darkest_blue"
+            android:textSize="@dimen/_18ssp"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -34,7 +56,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/tell_us_more"
+                android:text="@string/upload_media"
                 android:fontFamily="@font/gill_sans_bold"
                 android:textColor="@color/black"
                 android:textAlignment="viewStart"
@@ -42,7 +64,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/now_choose_to_what_section_your_work_follows_and_tell_us_more_about_it"
+                android:text="@string/first_upload_pictures_and_videos_to_your_post_you_can_upload_up_to_6_media_contents"
                 android:fontFamily="@font/gill_sans_regular"
                 android:textColor="@color/black"
                 android:textAlignment="viewStart"
@@ -87,7 +109,6 @@
                 </com.google.android.material.card.MaterialCardView>
 
                 <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/media2_CV"
                     android:layout_width="0dp"
                     android:layout_height="@dimen/_90sdp"
                     android:layout_weight="1"
@@ -125,7 +146,6 @@
                 android:weightSum="2"
                 android:layout_marginTop="@dimen/_15sdp">
                 <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/media3_CV"
                     android:layout_width="0dp"
                     android:layout_height="@dimen/_90sdp"
                     android:layout_weight="1"
@@ -157,7 +177,6 @@
                 </com.google.android.material.card.MaterialCardView>
 
                 <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/media4_CV"
                     android:layout_width="0dp"
                     android:layout_height="@dimen/_90sdp"
                     android:layout_weight="1"
@@ -195,7 +214,6 @@
                 android:weightSum="2"
                 android:layout_marginTop="@dimen/_15sdp">
                 <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/media5_CV"
                     android:layout_width="0dp"
                     android:layout_height="@dimen/_90sdp"
                     android:layout_weight="1"
@@ -227,7 +245,6 @@
                 </com.google.android.material.card.MaterialCardView>
 
                 <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/media6_CV"
                     android:layout_width="0dp"
                     android:layout_height="@dimen/_90sdp"
                     android:layout_weight="1"
@@ -258,77 +275,18 @@
                     </androidx.constraintlayout.widget.ConstraintLayout>
                 </com.google.android.material.card.MaterialCardView>
             </androidx.appcompat.widget.LinearLayoutCompat>
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/categories_layout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    android:layout_marginTop="@dimen/_15sdp"
-                    android:background="@drawable/darkest_blue_gray_10radius"
-                    android:padding="@dimen/_3sdp">
-                    <Spinner
-                        android:id="@+id/categories_spinner"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"/>
-                </androidx.constraintlayout.widget.ConstraintLayout>
-            </androidx.constraintlayout.widget.ConstraintLayout>
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/description_layout"
-                style="@style/DarkBlueTextInputLayoutStyle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_15sdp"
-                android:textColorHint="@color/darkest_blue"
-                app:counterTextColor="@color/darkest_blue"
-                app:helperTextTextColor="@color/darkest_blue"
-                app:hintTextColor="@color/darkest_blue"
-                app:boxStrokeColor="@color/darkest_blue"
-                app:boxBackgroundColor="@color/light_gray_trans35"
-                app:boxStrokeWidth="@dimen/_1sdp"
-                app:boxCornerRadiusBottomEnd="@dimen/_8sdp"
-                app:boxCornerRadiusBottomStart="@dimen/_8sdp"
-                app:boxCornerRadiusTopEnd="@dimen/_8sdp"
-                app:boxCornerRadiusTopStart="@dimen/_8sdp">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/description_edt"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/description"
-                    android:imeOptions="actionDone"
-                    android:inputType="text"
-                    android:textSize="@dimen/_13ssp"
-                    android:textAlignment="viewStart"
-                    android:fontFamily="@font/gill_sans_regular"
-                    android:textColorHint="@color/darkest_blue"
-                    android:textColor="@color/darkest_blue"
-                    app:helperText="OutlinedBox helper helper"/>
-
-            </com.google.android.material.textfield.TextInputLayout>
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/share"
+                android:id="@+id/next"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/description_layout"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginTop="@dimen/_30sdp"
-                android:backgroundTint="@color/purple2"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:backgroundTint="@color/dark_purple"
                 app:cornerRadius="@dimen/_15sdp"
-                android:text="@string/share"
-                android:textColor="@color/white"
+                android:text="@string/next"
                 android:fontFamily="@font/gill_sans_semibold"
-                android:textSize="@dimen/_13ssp"
-                android:textAllCaps="false"/>
+                android:textColor="@color/white"
+                android:textAllCaps="false"
+                android:textSize="@dimen/_14ssp"/>
         </androidx.appcompat.widget.LinearLayoutCompat>
     </androidx.core.widget.NestedScrollView>
 

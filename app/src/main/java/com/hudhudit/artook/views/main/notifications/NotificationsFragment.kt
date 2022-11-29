@@ -1,7 +1,11 @@
 package com.hudhudit.artook.views.main.notifications
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -37,12 +41,18 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.text.ParseException
+import java.text.SimpleDateFormat
+import java.util.*
+import java.util.concurrent.TimeUnit
+import kotlin.collections.ArrayList
 
 @AndroidEntryPoint
 class NotificationsFragment : Fragment() {
 
     lateinit var binding: FragmentNotificationsBinding
     lateinit var mainActivity: MainActivity
+    lateinit var adapter : NotificationsAdapter
     var notifications: ArrayList<Notification> = ArrayList()
     var page = 1
 
@@ -75,6 +85,11 @@ class NotificationsFragment : Fragment() {
     private fun init(){
         binding.toolbarLayout.title.text = resources.getString(R.string.notifications)
         mainActivity.visibleBottomBar()
+        if (AppDefs.lang == "ar"){
+            binding.toolbarLayout.navigateBack.scaleX = (-1).toFloat()
+        }else{
+            binding.toolbarLayout.navigateBack.scaleX = (1).toFloat()
+        }
     }
 
     private fun onClick(){
@@ -108,10 +123,10 @@ class NotificationsFragment : Fragment() {
             override fun onResponse(call: Call<NotificationsResult>, response: Response<NotificationsResult>) {
                 binding.progressBar.visibility = View.GONE
                 if (response.isSuccessful){
-                    for (notification in response.body()!!.results!!.data){
+                    for (notification in response.body()!!.results.data){
                         notifications.add(notification)
                     }
-                    setNotificationsRV()
+                    updateDisplay()
                 }else{
                     val gson = Gson()
                     val type = object : TypeToken<UserData>() {}.type //ErrorResponse is the data class that matches the error response
@@ -135,7 +150,7 @@ class NotificationsFragment : Fragment() {
     private fun setNotificationsRV(){
         binding.notificationsNCS.visibility = View.VISIBLE
         binding.noNotifications.visibility = View.GONE
-        val adapter = NotificationsAdapter(this, notifications)
+        adapter = NotificationsAdapter(this, notifications)
         binding.notificationsRV.adapter = adapter
         binding.notificationsRV.layoutManager = LinearLayoutManager(mainActivity)
     }
@@ -273,5 +288,63 @@ class NotificationsFragment : Fragment() {
         fragmentTransaction.replace(R.id.container, fragment)
         fragmentTransaction.addToBackStack("Details")
         fragmentTransaction.commit()
+    }
+
+    fun updateDisplay() {
+        for (notification in notifications){
+            notification.convertedTime = covertTimeToText(notification.time)!!
+        }
+        setNotificationsRV()
+        val timer = Timer()
+        timer.schedule(object : TimerTask() {
+            @SuppressLint("NotifyDataSetChanged")
+            override fun run() {
+                Handler(Looper.getMainLooper()).post(Runnable {
+                    for (notification in notifications){
+                        notification.convertedTime = covertTimeToText(notification.time)!!
+                    }
+                    adapter.notifyDataSetChanged()
+                })
+            }
+        }, 1000, 20000) //Update text every 10 second
+
+
+    }
+
+    fun covertTimeToText(dataDate: String?): String? {
+        var convTime: String? = null
+        val prefix = ""
+        val suffix = "Ago"
+        try {
+            val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+            val pasTime = dateFormat.parse(dataDate)
+            val nowTime = Date()
+            val dateDiff = nowTime.time - pasTime.time
+            val second = TimeUnit.MILLISECONDS.toSeconds(dateDiff)
+            val minute = TimeUnit.MILLISECONDS.toMinutes(dateDiff)
+            val hour = TimeUnit.MILLISECONDS.toHours(dateDiff)
+            val day = TimeUnit.MILLISECONDS.toDays(dateDiff)
+            if (second < 60) {
+                convTime = "$second Seconds $suffix"
+            } else if (minute < 60) {
+                convTime = "$minute Minutes $suffix"
+            } else if (hour < 24) {
+                convTime = "$hour Hours $suffix"
+            } else if (day >= 7) {
+                convTime = if (day > 360) {
+                    (day / 360).toString() + " Years " + suffix
+                } else if (day > 30) {
+                    (day / 30).toString() + " Months " + suffix
+                } else {
+                    (day / 7).toString() + " Week " + suffix
+                }
+            } else if (day < 7) {
+                convTime = "$day Days $suffix"
+            }
+        } catch (e: ParseException) {
+            e.printStackTrace()
+            Log.e("ConvTimeE", e.message!!)
+        }
+        return convTime
     }
 }

@@ -64,6 +64,11 @@ class VoteFragment : Fragment() {
         contest = requireArguments().getParcelable("contest")!!
         setData()
         getParticipants()
+        if (AppDefs.lang == "ar"){
+            binding.toolbarLayout.navigateBack.scaleX = (-1).toFloat()
+        }else{
+            binding.toolbarLayout.navigateBack.scaleX = (1).toFloat()
+        }
     }
 
     private fun onClick(){
