@@ -36,6 +36,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 tools:text="Sara Ahmad"
+                android:textAlignment="viewStart"
                 android:fontFamily="@font/gill_sans_semibold"
                 android:textSize="@dimen/_10ssp"
                 android:textColor="@color/black"/>
@@ -47,6 +48,7 @@
                 app:layout_constraintStart_toEndOf="@id/user_info_layout"
                 android:layout_marginStart="@dimen/_5sdp"
                 tools:text="Great Painting!"
+                android:textAlignment="viewStart"
                 android:fontFamily="@font/gill_sans_regular"
                 android:textSize="@dimen/_10ssp"
                 android:textColor="@color/dark_gray"/>
@@ -57,6 +59,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_7sdp"
             tools:text="1 day"
+            android:textAlignment="viewStart"
             android:fontFamily="@font/gill_sans_regular"
             android:textSize="@dimen/_8ssp"
             android:textColor="@color/dark_purple"/>

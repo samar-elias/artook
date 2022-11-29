@@ -50,6 +50,7 @@
             android:layout_marginStart="@dimen/_7sdp"
             android:layout_marginEnd="@dimen/_7sdp"
             android:hint="@string/search"
+            android:textAlignment="viewStart"
             android:fontFamily="@font/gill_sans_regular"
             android:textSize="@dimen/_14ssp"
             android:textColor="@color/darkest_blue"

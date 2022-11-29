@@ -39,6 +39,7 @@
             app:layout_constraintStart_toStartOf="parent"
             android:layout_margin="@dimen/_15sdp"
             tools:text="Video Title"
+            android:textAlignment="viewStart"
             android:fontFamily="@font/gill_sans_semibold"
             android:textSize="@dimen/_15ssp"
             android:textColor="@color/white"/>

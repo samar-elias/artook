@@ -51,6 +51,7 @@
                 android:layout_marginStart="@dimen/_20sdp"
                 android:layout_marginTop="@dimen/_15sdp"
                 tools:text="Youth ART contest"
+                android:textAlignment="viewStart"
                 android:fontFamily="@font/gill_sans_semibold"
                 android:textColor="@color/white"
                 android:textSize="@dimen/_14ssp"/>
@@ -63,6 +64,7 @@
                 android:layout_marginStart="@dimen/_20sdp"
                 android:layout_marginTop="@dimen/_10sdp"
                 tools:text="11 Oct 2022"
+                android:textAlignment="viewStart"
                 android:fontFamily="@font/gill_sans_regular"
                 android:textColor="@color/gray"
                 android:textSize="@dimen/_8ssp"/>
@@ -134,6 +136,7 @@
                 app:layout_constraintTop_toBottomOf="@id/description_title"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                android:textAlignment="viewStart"
                 android:layout_marginEnd="@dimen/_20sdp"
                 android:layout_marginStart="@dimen/_20sdp"
                 android:layout_marginTop="@dimen/_10sdp"
@@ -145,5 +148,16 @@ ontrary to popular belief, Lorem Ipsum is not simply random text. It has roots i
                 android:textSize="@dimen/_10ssp"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
+
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:indeterminateTint="@color/dark_purple"
+        android:visibility="gone"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

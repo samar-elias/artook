@@ -17,6 +17,7 @@ import com.hudhudit.artook.apputils.modules.booleanresponse.BooleanResponse
 import com.hudhudit.artook.apputils.modules.user.UserData
 import com.hudhudit.artook.apputils.remote.RetrofitAPIs
 import com.hudhudit.artook.R
+import com.hudhudit.artook.apputils.appdefs.AppDefs
 import com.hudhudit.artook.views.registration.RegistrationActivity
 import com.hudhudit.artook.databinding.FragmentPhoneNumberBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -62,6 +63,11 @@ class PhoneNumberFragment : Fragment() {
     }
 
     private fun onClick(){
+        if (AppDefs.lang == "ar"){
+            binding.navigateBack.scaleX = (-1).toFloat()
+        }else{
+            binding.navigateBack.scaleX = (1).toFloat()
+        }
         binding.phoneLayout.setOnClickListener { registrationActivity.hideKeyboard() }
         binding.next.setOnClickListener { checkValidation() }
         binding.navigateBack.setOnClickListener { navController.popBackStack() }

@@ -25,6 +25,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginStart="@dimen/_7sdp"
         tools:text="Sara Ahmad"
+        android:textAlignment="viewStart"
         android:fontFamily="@font/gill_sans_semibold"
         android:textColor="@color/black"
         android:textSize="@dimen/_12ssp"/>

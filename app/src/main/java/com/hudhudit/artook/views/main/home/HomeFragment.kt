@@ -39,6 +39,7 @@ import com.hudhudit.artook.views.main.profile.userprofile.UserProfileFragment
 import com.hudhudit.artook.views.main.search.SearchFragment
 import com.hudhudit.artook.databinding.FragmentHomeBinding
 import com.hudhudit.artook.views.main.newpost.NewPostFragment
+import com.hudhudit.artook.views.main.newpost.UploadMediaNewPostFragment
 import dagger.hilt.android.AndroidEntryPoint
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -83,6 +84,12 @@ class HomeFragment : Fragment() {
         posts.clear()
         mainActivity.visibleBottomBar()
         mainActivity.isHome = true
+        AppDefs.media1Uri = null
+        AppDefs.media2Uri = null
+        AppDefs.media3Uri = null
+        AppDefs.media4Uri = null
+        AppDefs.media5Uri = null
+        AppDefs.media6Uri = null
     }
 
     private fun onClick(){
@@ -541,7 +548,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun navigateToNewPost(){
-        val fragment: Fragment = NewPostFragment()
+        val fragment: Fragment = UploadMediaNewPostFragment()
         val fragmentManager: FragmentManager = mainActivity.supportFragmentManager
         val fragmentTransaction: FragmentTransaction = fragmentManager.beginTransaction()
         fragmentTransaction.replace(R.id.container, fragment)

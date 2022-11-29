@@ -7,9 +7,9 @@
     app:cardCornerRadius="@dimen/_5sdp"
     android:layout_marginStart="@dimen/_15sdp"
     android:layout_marginEnd="@dimen/_15sdp"
-    android:layout_marginTop="@dimen/_5sdp"
-    android:layout_marginBottom="@dimen/_5sdp"
-    app:cardElevation="@dimen/_10sdp">
+    android:layout_marginTop="@dimen/_3sdp"
+    android:layout_marginBottom="@dimen/_7sdp"
+    app:cardElevation="@dimen/_3sdp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -54,6 +54,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     tools:text="Sara Ahmad"
+                    android:textAlignment="viewStart"
                     android:fontFamily="@font/gill_sans_regular"
                     android:textSize="@dimen/_10ssp"
                     android:textColor="@color/black"/>
@@ -72,10 +73,11 @@
             </androidx.appcompat.widget.LinearLayoutCompat>
             <TextView
                 android:id="@+id/notification_date"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_7sdp"
                 tools:text="1 day"
+                android:textAlignment="viewStart"
                 android:fontFamily="@font/gill_sans_regular"
                 android:textSize="@dimen/_8ssp"
                 android:textColor="@color/dark_purple"/>

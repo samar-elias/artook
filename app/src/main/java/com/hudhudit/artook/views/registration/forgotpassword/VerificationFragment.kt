@@ -16,6 +16,7 @@ import com.google.firebase.FirebaseException
 import com.google.firebase.auth.*
 import com.google.firebase.messaging.FirebaseMessaging
 import com.hudhudit.artook.R
+import com.hudhudit.artook.apputils.appdefs.AppDefs
 import com.hudhudit.artook.views.registration.RegistrationActivity
 import com.hudhudit.artook.databinding.FragmentVerificationBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -99,6 +100,11 @@ class VerificationFragment : Fragment() {
             Toast.makeText(registrationActivity, resources.getString(R.string.code_sent_successfully), Toast.LENGTH_SHORT).show()
         }
         binding.navigateBack.setOnClickListener { navController.popBackStack() }
+        if (AppDefs.lang == "ar"){
+            binding.navigateBack.scaleX = (-1).toFloat()
+        }else{
+            binding.navigateBack.scaleX = (1).toFloat()
+        }
     }
 
     private fun getToken() {

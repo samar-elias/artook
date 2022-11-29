@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import com.bumptech.glide.Glide
 import com.hudhudit.artook.apputils.modules.videosarticles.Article
 import com.hudhudit.artook.R
+import com.hudhudit.artook.apputils.appdefs.AppDefs
 import com.hudhudit.artook.views.main.MainActivity
 import com.hudhudit.artook.databinding.FragmentArticleDetailsBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -42,6 +43,11 @@ class ArticleDetailsFragment : Fragment() {
         onClick()
         setData()
         mainActivity.visibleBottomBar()
+        if (AppDefs.lang == "ar"){
+            binding.toolbarLayout.navigateBack.scaleX = (-1).toFloat()
+        }else{
+            binding.toolbarLayout.navigateBack.scaleX = (1).toFloat()
+        }
     }
 
     private fun onClick(){

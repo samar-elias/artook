@@ -8,6 +8,8 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -26,20 +28,20 @@ import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import com.hudhudit.artook.BuildConfig
+import com.hudhudit.artook.R
 import com.hudhudit.artook.apputils.appdefs.AppDefs
 import com.hudhudit.artook.apputils.appdefs.Urls
 import com.hudhudit.artook.apputils.modules.booleanresponse.BooleanResponse
 import com.hudhudit.artook.apputils.modules.post.*
 import com.hudhudit.artook.apputils.modules.user.UserData
 import com.hudhudit.artook.apputils.remote.RetrofitAPIs
-import com.hudhudit.artook.BuildConfig
-import com.hudhudit.artook.R
+import com.hudhudit.artook.databinding.FragmentCommentsBinding
+import com.hudhudit.artook.views.main.MainActivity
 import com.hudhudit.artook.views.main.comments.adapters.CommentsAdapter
 import com.hudhudit.artook.views.main.comments.adapters.PostMediaAdapter
-import com.hudhudit.artook.views.main.MainActivity
 import com.hudhudit.artook.views.main.profile.ProfileFragment
 import com.hudhudit.artook.views.main.profile.userprofile.UserProfileFragment
-import com.hudhudit.artook.databinding.FragmentCommentsBinding
 import dagger.hilt.android.AndroidEntryPoint
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -48,12 +50,18 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.text.ParseException
+import java.text.SimpleDateFormat
+import java.util.*
+import java.util.concurrent.TimeUnit
+
 
 @AndroidEntryPoint
 class CommentsFragment : Fragment() {
 
     lateinit var binding: FragmentCommentsBinding
     lateinit var mainActivity: MainActivity
+    lateinit var adapter: CommentsAdapter
     var comments: ArrayList<Comment> = ArrayList()
     lateinit var post: Post
     var postId: String? = null
@@ -117,6 +125,11 @@ class CommentsFragment : Fragment() {
 
     @SuppressLint("NewApi")
     private fun onClick(){
+        if (AppDefs.lang == "ar"){
+            binding.toolbarLayout.navigateBack.scaleX = (-1).toFloat()
+        }else{
+            binding.toolbarLayout.navigateBack.scaleX = (1).toFloat()
+        }
         binding.toolbarLayout.navigateBack.setOnClickListener {
             mainActivity.supportFragmentManager.popBackStack()
             mainActivity.visibleBottomBar()
@@ -219,27 +232,10 @@ class CommentsFragment : Fragment() {
                 binding.postLayout.mediaCounter.text = ((binding.postLayout.mediaRV.layoutManager as LinearLayoutManager).findFirstVisibleItemPosition()+1).toString()+"/"+post.posts_media.size
             }
 
-//        binding.postLayout.mediaRV.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-//            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-//                super.onScrollStateChanged(recyclerView, newState)
-//                if (newState === RecyclerView.SCROLL_STATE_DRAGGING) {
-//                    //Dragging
-//                } else if (newState === RecyclerView.SCROLL_STATE_IDLE) {
-//                    position = layoutManager.findLastCompletelyVisibleItemPosition()
-//                    if (position == videoPosition){
-//                        setMediaRV()
-//                    }
-//
-//                }
-//            }
-//
-//            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-//                super.onScrolled(recyclerView, dx, dy)
-//                val firstVisibleItem: Int = layoutManager.findLastVisibleItemPosition()
-//            }
-//        })
 
     }
+
+
 
     private fun setMediaRV(){
         val adapter = PostMediaAdapter(this, post.posts_media)
@@ -272,7 +268,7 @@ class CommentsFragment : Fragment() {
                     for (comment in response.body()!!.results.data){
                         comments.add(comment)
                     }
-                    setCommentsRV()
+                    updateDisplay()
                 }else{
                     val gson = Gson()
                     val type = object : TypeToken<UserData>() {}.type //ErrorResponse is the data class that matches the error response
@@ -291,10 +287,16 @@ class CommentsFragment : Fragment() {
     }
 
     private fun setCommentsRV(){
-        val adapter = CommentsAdapter(this, comments)
+        adapter = CommentsAdapter(this, comments)
         binding.commentsRV.adapter = adapter
         binding.commentsRV.layoutManager = LinearLayoutManager(mainActivity)
     }
+
+//    private fun setCommentsRV2(){
+//        val fragment: Fragment = CommentsFragment()
+//        val adapter = CommentsAdapter(fragment as CommentsFragment, comments)
+//        binding.commentsRV.adapter = adapter
+//    }
 
     private fun likePost(postId: String){
         binding.progressBar.visibility = View.VISIBLE
@@ -764,6 +766,7 @@ class CommentsFragment : Fragment() {
                     binding.postLayout.likesCount.text = response.body()!!.results.number_posts_like
                     binding.postLayout.commentCount.text = response.body()!!.results.number_posts_comments
                     comments.clear()
+                    page = 1
                     getComments()
                 }else{
                     val gson = Gson()
@@ -895,5 +898,63 @@ class CommentsFragment : Fragment() {
             binding.fullImage.visibility = View.VISIBLE
             Glide.with(mainActivity).load(media).into(binding.fullImage)
         }
+    }
+
+    fun updateDisplay() {
+        for (comment in comments){
+            comment.convertedTime = covertTimeToText(comment.time)!!
+        }
+        setCommentsRV()
+        val timer = Timer()
+        timer.schedule(object : TimerTask() {
+            @SuppressLint("NotifyDataSetChanged")
+            override fun run() {
+                Handler(Looper.getMainLooper()).post(Runnable {
+                    for (comment in comments){
+                        comment.convertedTime = covertTimeToText(comment.time)!!
+                    }
+                    adapter.notifyDataSetChanged()
+                })
+            }
+        }, 1000, 20000) //Update text every 10 second
+
+
+    }
+
+    fun covertTimeToText(dataDate: String?): String? {
+        var convTime: String? = null
+        val prefix = ""
+        val suffix = "Ago"
+        try {
+            val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+            val pasTime = dateFormat.parse(dataDate)
+            val nowTime = Date()
+            val dateDiff = nowTime.time - pasTime.time
+            val second = TimeUnit.MILLISECONDS.toSeconds(dateDiff)
+            val minute = TimeUnit.MILLISECONDS.toMinutes(dateDiff)
+            val hour = TimeUnit.MILLISECONDS.toHours(dateDiff)
+            val day = TimeUnit.MILLISECONDS.toDays(dateDiff)
+            if (second < 60) {
+                convTime = "$second Seconds $suffix"
+            } else if (minute < 60) {
+                convTime = "$minute Minutes $suffix"
+            } else if (hour < 24) {
+                convTime = "$hour Hours $suffix"
+            } else if (day >= 7) {
+                convTime = if (day > 360) {
+                    (day / 360).toString() + " Years " + suffix
+                } else if (day > 30) {
+                    (day / 30).toString() + " Months " + suffix
+                } else {
+                    (day / 7).toString() + " Week " + suffix
+                }
+            } else if (day < 7) {
+                convTime = "$day Days $suffix"
+            }
+        } catch (e: ParseException) {
+            e.printStackTrace()
+            Log.e("ConvTimeE", e.message!!)
+        }
+        return convTime
     }
 }

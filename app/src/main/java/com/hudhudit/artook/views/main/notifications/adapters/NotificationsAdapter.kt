@@ -36,7 +36,7 @@ class NotificationsAdapter(
         }
         holder.userName.text = Html.fromHtml(notification.name)
         holder.notification.text = notification.title
-        holder.notificationDate.text = notification.time
+        holder.notificationDate.text = notification.convertedTime
         if (notification.is_seen == "0"){
             holder.unRead.visibility = View.VISIBLE
         }else{

@@ -74,6 +74,11 @@ class SearchByCategoryFragment : Fragment() {
         category = requireArguments().getParcelable("category")!!
         binding.toolbarLayout.title.text = resources.getString(R.string.search_in)+" "+category.title
         mainActivity.visibleBottomBar()
+        if (AppDefs.lang == "ar"){
+            binding.toolbarLayout.navigateBack.scaleX = (-1).toFloat()
+        }else{
+            binding.toolbarLayout.navigateBack.scaleX = (1).toFloat()
+        }
     }
 
     private fun onClick(){

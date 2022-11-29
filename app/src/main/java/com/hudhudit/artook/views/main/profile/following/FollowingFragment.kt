@@ -70,6 +70,11 @@ class FollowingFragment : Fragment() {
         binding.toolbarLayout.title.text = resources.getString(R.string.followers)
         clientId = requireArguments().getString("clientId")!!
         mainActivity.visibleBottomBar()
+        if (AppDefs.lang == "ar"){
+            binding.toolbarLayout.navigateBack.scaleX = (-1).toFloat()
+        }else{
+            binding.toolbarLayout.navigateBack.scaleX = (1).toFloat()
+        }
     }
 
     private fun onClick(){

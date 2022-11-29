@@ -96,10 +96,14 @@ class UserProfileFragment : Fragment() {
 
     private fun init(view: View) {
         posts.clear()
-//        navController = Navigation.findNavController(view)
         clientId = requireArguments().getString("clientId")!!
         mainActivity.visibleBottomBar()
         binding.toolbarLayout.navigateBack.visibility = View.VISIBLE
+        if (AppDefs.lang == "ar"){
+            binding.toolbarLayout.navigateBack.scaleX = (-1).toFloat()
+        }else{
+            binding.toolbarLayout.navigateBack.scaleX = (1).toFloat()
+        }
 
     }
 
