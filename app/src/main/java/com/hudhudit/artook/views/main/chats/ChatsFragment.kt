@@ -66,7 +66,9 @@ class ChatsFragment : Fragment() {
         viewModel.getChat(AppDefs.user.results!!.id)
         setUpRecyclerView()
         getChat()
-
+        binding.searchLayout.setOnClickListener {
+            binding.serch.isFocusableInTouchMode = true
+        }
         binding.serch.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
                 searchCompany(query)
@@ -125,10 +127,6 @@ class ChatsFragment : Fragment() {
         var result= listChatModel!!.filter {  it.nameUser!!.contains(str,true) ||  it.nameOwnerItemUser!!.contains(str,true)}
         adapter = ChatAdapter(result as MutableList<UserChatModel>
         ) {
-           /* if (findNavController().currentDestination?.id == R.id.chatFragment) {
-                findNavController().navigate(R.id.action_chatFragment_to_chatDetailsFragment,
-                    bundleOf(Pair(ChatDetailsFragment.KEY, it!!)))
-            }*/
             userChatModel=it!!
             openChat()
 

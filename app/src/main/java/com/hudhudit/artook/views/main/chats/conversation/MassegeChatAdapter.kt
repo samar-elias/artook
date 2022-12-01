@@ -24,7 +24,8 @@ import java.util.*
 
 class MessageChatAdapter(
     private var marketSections: MutableList<MessageModel>,
-    private var userChatModel: UserChatModel
+    private var userChatModel: UserChatModel,
+
 ) : BaseAdapter<MessageModel, BaseBindingViewHolder<MessageModel>>(marketSections) {
     var x = ""
     var y = ""
@@ -126,6 +127,7 @@ class MessageChatAdapter(
 
                     binding.tvDate.visibility = View.GONE
                 } else {
+
                     binding.tvDate.visibility = View.VISIBLE
                     binding.tvDate.text = getMyPrettyDate(
                         originalString,context)
