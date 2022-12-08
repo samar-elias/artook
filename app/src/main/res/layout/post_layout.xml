@@ -34,6 +34,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             tools:text="Sara Ahmad"
+            android:textAlignment="viewStart"
             android:fontFamily="@font/gill_sans_semibold"
             android:textSize="@dimen/_10ssp"
             android:textColor="@color/black"/>
@@ -43,6 +44,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_3sdp"
             tools:text="9:30  Oct 11, 2022"
+            android:textAlignment="viewStart"
             android:fontFamily="@font/gill_sans_regular"
             android:textSize="@dimen/_7ssp"
             android:textColor="@color/dark_gray"/>
@@ -217,6 +219,7 @@
         android:layout_marginTop="@dimen/_15sdp"
         android:layout_marginStart="@dimen/_7sdp"
         android:layout_marginEnd="@dimen/_7sdp"
+        android:textAlignment="viewStart"
         tools:text="I use oil paints to disrupt the purity of the blank canvas with abstract shapes and lines."
         android:fontFamily="@font/gill_sans_regular"
         android:textColor="@color/black"

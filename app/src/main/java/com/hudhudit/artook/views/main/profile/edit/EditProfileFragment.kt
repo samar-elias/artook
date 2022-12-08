@@ -7,7 +7,6 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.graphics.Color
-import android.graphics.Typeface
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.text.Editable
@@ -21,12 +20,14 @@ import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.google.android.material.button.MaterialButton
+import com.google.android.material.card.MaterialCardView
 import com.google.android.material.textfield.TextInputEditText
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.hudhudit.artook.R
 import com.hudhudit.artook.apputils.appdefs.AppDefs
 import com.hudhudit.artook.apputils.appdefs.Urls
+import com.hudhudit.artook.apputils.helpers.LocaleHelper
 import com.hudhudit.artook.apputils.modules.booleanresponse.BooleanResponse
 import com.hudhudit.artook.apputils.modules.user.UserData
 import com.hudhudit.artook.apputils.remote.RetrofitAPIs
@@ -57,6 +58,7 @@ class EditProfileFragment : Fragment() {
     private val REQUEST_CODE = 100
     private val REQUEST_IMAGE_GALLERY = 101
     var imagePath = ""
+    var lang = "en"
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -77,12 +79,18 @@ class EditProfileFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        lang = AppDefs.lang!!
         onClick()
         setData()
         mainActivity.visibleBottomBar()
     }
 
     private fun onClick(){
+        if (AppDefs.lang == "ar"){
+            binding.navigateBack.scaleX = (-1).toFloat()
+        }else{
+            binding.navigateBack.scaleX = (1).toFloat()
+        }
         binding.navigateBack.setOnClickListener { mainActivity.supportFragmentManager.popBackStack() }
         binding.userNameEdt.addTextChangedListener(object : TextWatcher {
 
@@ -117,6 +125,7 @@ class EditProfileFragment : Fragment() {
         binding.changePicture.setOnClickListener { pickImage() }
         binding.changePassword.setOnClickListener { changePasswordPopUp() }
         binding.logout.setOnClickListener { logoutPopUp() }
+        binding.language.setOnClickListener { changeLanguagePopUp() }
     }
 
     private fun setData(){
@@ -321,7 +330,7 @@ class EditProfileFragment : Fragment() {
                 binding.progressBar.visibility = View.GONE
                 if (response.isSuccessful){
                     AppDefs.user = response.body()!!
-                    saveUserToSharedPreferences()
+                    saveUserToSharedPreferences(false)
                 }else{
                     val gson = Gson()
                     val type = object : TypeToken<UserData>() {}.type //ErrorResponse is the data class that matches the error response
@@ -396,7 +405,7 @@ class EditProfileFragment : Fragment() {
 
     }
 
-    private fun saveUserToSharedPreferences() {
+    private fun saveUserToSharedPreferences(isRefresh: Boolean) {
         val sharedPreferences =
             mainActivity.getSharedPreferences(AppDefs.SHARED_PREF_KEY, Context.MODE_PRIVATE)
         val editor = sharedPreferences.edit()
@@ -407,14 +416,45 @@ class EditProfileFragment : Fragment() {
         val json = gson.toJson(AppDefs.user)
         editor.putString(AppDefs.USER_KEY, json)
         editor.apply()
-        mainActivity.supportFragmentManager.popBackStack()
+        if (isRefresh){
+            val intent = Intent(mainActivity, SplashActivity:: class.java)
+            startActivity(intent)
+            mainActivity.finish()
+        }else{
+            mainActivity.supportFragmentManager.popBackStack()
+        }
 
     }
 
-    private fun openGallery(){
-        val intent = Intent(Intent.ACTION_PICK)
-        intent.type = "image/*"
-        startActivityForResult(intent, REQUEST_IMAGE_GALLERY)
+    private fun changeLanguagePopUp() {
+        val alertView: View =
+            LayoutInflater.from(context).inflate(R.layout.change_language_popup, null)
+        val alertBuilder = AlertDialog.Builder(context).setView(alertView).show()
+        alertBuilder.show()
+        alertBuilder.setCancelable(false)
+
+        alertBuilder.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+        val english: MaterialCardView = alertView.findViewById(R.id.english)
+        val arabic: MaterialCardView = alertView.findViewById(R.id.arabic)
+        val close: ImageView = alertView.findViewById(R.id.close)
+
+        english.setOnClickListener {
+            lang = "en"
+            AppDefs.lang = lang
+            LocaleHelper.setAppLocale(AppDefs.lang, mainActivity)
+            saveUserToSharedPreferences(true)
+            alertBuilder.dismiss()
+        }
+        arabic.setOnClickListener {
+            lang = "ar"
+            AppDefs.lang = lang
+            LocaleHelper.setAppLocale(AppDefs.lang, mainActivity)
+            saveUserToSharedPreferences(true)
+            alertBuilder.dismiss()
+        }
+        close.setOnClickListener { alertBuilder.dismiss() }
+
     }
 
     private fun isValidPassword(password: String?): Boolean {

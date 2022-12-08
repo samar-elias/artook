@@ -75,18 +75,42 @@ class MainActivity : AppCompatActivity() {
         bottomNavigationView.setOnItemSelectedListener {
             when (it.itemId){
                 R.id.navigation_home -> {
+                    AppDefs.media1Uri = null
+                    AppDefs.media2Uri = null
+                    AppDefs.media3Uri = null
+                    AppDefs.media4Uri = null
+                    AppDefs.media5Uri = null
+                    AppDefs.media6Uri = null
                     supportFragmentManager.beginTransaction().replace(R.id.container, HomeFragment()).commit()
                 }
                 R.id.navigation_search -> {
-                    supportFragmentManager.beginTransaction().add(R.id.container, SearchFragment()).commit()
+                    AppDefs.media1Uri = null
+                    AppDefs.media2Uri = null
+                    AppDefs.media3Uri = null
+                    AppDefs.media4Uri = null
+                    AppDefs.media5Uri = null
+                    AppDefs.media6Uri = null
+                    supportFragmentManager.beginTransaction().replace(R.id.container, SearchFragment()).commit()
                 }
                 R.id.navigation_videos_articles -> {
-                    supportFragmentManager.beginTransaction().add(R.id.container, VideosArticlesFragment()).commit()
+                    AppDefs.media1Uri = null
+                    AppDefs.media2Uri = null
+                    AppDefs.media3Uri = null
+                    AppDefs.media4Uri = null
+                    AppDefs.media5Uri = null
+                    AppDefs.media6Uri = null
+                    supportFragmentManager.beginTransaction().replace(R.id.container, VideosArticlesFragment()).commit()
                 }
                 R.id.navigation_profile -> {
+                    AppDefs.media1Uri = null
+                    AppDefs.media2Uri = null
+                    AppDefs.media3Uri = null
+                    AppDefs.media4Uri = null
+                    AppDefs.media5Uri = null
+                    AppDefs.media6Uri = null
                     hasBack = false
                     AppDefs.isFeed = true
-                    supportFragmentManager.beginTransaction().add(R.id.container, ProfileFragment()).commit()
+                    supportFragmentManager.beginTransaction().replace(R.id.container, ProfileFragment()).commit()
                 }
             }
 
@@ -94,6 +118,12 @@ class MainActivity : AppCompatActivity() {
         }
 
         competitionFB.setOnClickListener {
+            AppDefs.media1Uri = null
+            AppDefs.media2Uri = null
+            AppDefs.media3Uri = null
+            AppDefs.media4Uri = null
+            AppDefs.media5Uri = null
+            AppDefs.media6Uri = null
             supportFragmentManager.beginTransaction().replace(R.id.container, CompetitionFragment()).commit()
         }
 

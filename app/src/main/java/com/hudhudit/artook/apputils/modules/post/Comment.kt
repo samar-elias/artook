@@ -7,7 +7,8 @@ data class Comment(val id: String,
                    val name: String,
                    val image_client: String,
                    val title: String,
-                   val time: String)
+                   val time: String,
+                   var convertedTime: String = "")
 
 data class Comments(val count_page: String,
                     val data: ArrayList<Comment>)

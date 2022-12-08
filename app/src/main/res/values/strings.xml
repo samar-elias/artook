@@ -1,11 +1,8 @@
 <resources>
     <string name="app_name">Artook</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="facebook_app_id" translatable="false">1239719876759899</string>
     <string name="fb_login_protocol_scheme" translatable="false">fb1239719876759899</string>
     <string name="facebook_client_token" translatable="false">ae4ee705f723ee6f86c0f8e1d601bd55</string>
-
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="email_address">Email Address</string>
     <string name="password">Password</string>
     <string name="forgot_password">Forgot Password?</string>
@@ -60,6 +57,8 @@
     <string name="share">Share</string>
     <string name="videos">Videos</string>
     <string name="articles">Articles</string>
+    <string name="video">Videos</string>
+    <string name="article">Articles</string>
     <string name="read_more">Read more</string>
     <string name="enter_your_message">Enter your message</string>
     <string name="remaining_time">Remaining Time</string>
@@ -74,7 +73,7 @@
     <string name="internet_connection">Please check your internet connection!</string>
     <string name="invalid_data">Invalid email address or password!</string>
     <string name="invalid_email_address">Invalid email address format!</string>
-    <string name="enter_first_name">Please enter you first name!</string>
+    <string name="enter_first_name">Please enter your first name!</string>
     <string name="enter_last_name">Please enter your last name!</string>
     <string name="enter_phone_number">Please enter your phone number!</string>
     <string name="invalid_phone_number">Phone format 07********!</string>
@@ -92,7 +91,7 @@
     <string name="enter_new_password">Please enter new password!</string>
     <string name="email_exists">Email address is already exists!</string>
     <string name="phone_exists">Phone number is already exists!</string>
-    <string name="phone_not_exist">Phone number dosn\'t exist!</string>
+    <string name="phone_not_exist">Phone number doesn\'t exist!</string>
     <string name="wrong_code">Verification not completed! Try again</string>
     <string name="you_have_no_followers_yet">You have no followers yet!</string>
     <string name="start_posting_and_get_higher_exposure_to_gain_more_followers">Start posting and get higher exposure to gain more followers.</string>
@@ -124,7 +123,7 @@
     <string name="no_results">No results!</string>
     <string name="search_in">Search in</string>
     <string name="previous_contests">Previous Contests</string>
-    <string name="enter_image">Please enter you particiption image!</string>
+    <string name="enter_image">Please enter your participation image!</string>
     <string name="enter_description">Please enter the post description!</string>
     <string name="participation_submitted">Your participation has been submitted successfully!</string>
     <string name="votes">votes</string>
@@ -154,4 +153,12 @@
     <string name="an_hour_ago">an hour ago</string>
     <string name="tomorrow">Tomorrow</string>
     <string name="today">Today</string>
+    <string name="change_language">Change Language</string>
+    <string name="english">English</string>
+    <string name="arabic">Arabic</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="add_media">Please add at least one media type!</string>
+    <string name="select_category">Select Category</string>
+    <string name="select_a_category">Please select a category!</string>
 </resources>

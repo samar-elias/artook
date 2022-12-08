@@ -74,6 +74,7 @@
                 android:hint="@string/enter_your_comment"
                 android:fontFamily="@font/gill_sans_regular"
                 android:textSize="@dimen/_10ssp"
+                android:textAlignment="viewStart"
                 android:paddingStart="@dimen/_15sdp"
                 android:paddingTop="@dimen/_10sdp"
                 android:paddingEnd="@dimen/_15sdp"

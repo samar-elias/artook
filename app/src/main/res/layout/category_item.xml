@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/category"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="@dimen/_7sdp"
+    android:textSize="@dimen/_13ssp"
+    android:textAlignment="viewStart"
+    android:fontFamily="@font/gill_sans_regular"
+    android:textColorHint="@color/darkest_blue"
+    android:textColor="@color/darkest_blue"
+    android:text="@string/select_category">
+</TextView>

@@ -63,6 +63,11 @@ class ConversationFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        if (AppDefs.lang == "ar"){
+            binding.toolbarLayout.navigateBack.scaleX = (-1).toFloat()
+        }else{
+            binding.toolbarLayout.navigateBack.scaleX = (1).toFloat()
+        }
         binding.toolbarLayout.navigateBack.setOnClickListener { mainActivity.supportFragmentManager.popBackStack() }
         userChatModel = requireArguments().getParcelable("profile")!!
         if (AppDefs.user.results!!.id == userChatModel!!.userOwnerItemId) {

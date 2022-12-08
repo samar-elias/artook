@@ -52,6 +52,7 @@
                 android:layout_marginStart="@dimen/_20sdp"
                 android:layout_marginTop="@dimen/_15sdp"
                 tools:text="Youth ART contest"
+                android:textAlignment="viewStart"
                 android:fontFamily="@font/gill_sans_semibold"
                 android:textColor="@color/white"
                 android:textSize="@dimen/_14ssp"/>
@@ -64,6 +65,7 @@
                 android:layout_marginStart="@dimen/_20sdp"
                 android:layout_marginTop="@dimen/_10sdp"
                 tools:text="11 Oct 2022"
+                android:textAlignment="viewStart"
                 android:fontFamily="@font/gill_sans_regular"
                 android:textColor="@color/gray"
                 android:textSize="@dimen/_8ssp"/>

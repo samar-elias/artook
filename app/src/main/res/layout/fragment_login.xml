@@ -63,6 +63,7 @@
                     android:fontFamily="@font/gill_sans_regular"
                     android:textColorHint="@color/white"
                     android:textColor="@color/white"
+                    android:textAlignment="viewStart"
                     app:helperText="OutlinedBox helper helper"/>
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -90,6 +91,7 @@
                     android:imeOptions="actionDone"
                     android:inputType="textPassword"
                     android:textSize="@dimen/_12ssp"
+                    android:textAlignment="viewStart"
                     android:fontFamily="@font/gill_sans_regular"
                     android:textColorHint="@color/white"
                     android:textColor="@color/white"/>

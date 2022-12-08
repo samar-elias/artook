@@ -53,7 +53,6 @@ class NewPostFragment : Fragment() {
     private val REQUEST_IMAGE_GALLERY = 101
     private val REQUEST_TAKE_GALLERY_VIDEO = 100
     var image1Path = ""
-
     var image2Path = ""
     var image3Path = ""
     var image4Path = ""
@@ -112,6 +111,7 @@ class NewPostFragment : Fragment() {
         images.setOnClickListener {
             val intent = CropImage.activity().getIntent(requireActivity())
             startActivityForResult(intent, CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE)
+            alertBuilder.dismiss()
 //            com.github.dhaval2404.imagepicker.ImagePicker.with(this)
 //                .crop(40F, 40F)
 //                .compress(1024)
