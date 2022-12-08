@@ -79,10 +79,10 @@
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/media1_CV"
                     android:layout_width="0dp"
-                    android:layout_height="@dimen/_90sdp"
+                    android:layout_height="@dimen/_80sdp"
                     android:layout_weight="1"
                     app:cardCornerRadius="@dimen/_5sdp"
-                    android:layout_marginEnd="@dimen/_10sdp">
+                    android:layout_marginEnd="@dimen/_13sdp">
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent">
@@ -95,14 +95,34 @@
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintBottom_toBottomOf="parent"
                             android:src="@drawable/choose_media"
-                            android:scaleType="fitXY"/>
+                            android:scaleType="centerCrop"/>
+                        <ImageView
+                            android:id="@+id/media_shadow1"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            android:src="@color/black"
+                            android:alpha="0.30"
+                            android:visibility="gone"/>
                         <ImageView
                             android:id="@+id/delete_media1"
-                            android:layout_width="@dimen/_10sdp"
-                            android:layout_height="@dimen/_10sdp"
+                            android:layout_width="@dimen/_15sdp"
+                            android:layout_height="@dimen/_15sdp"
                             app:layout_constraintTop_toTopOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
-                            android:layout_margin="@dimen/_10sdp"
+                            android:layout_margin="@dimen/_5sdp"
+                            android:src="@drawable/remove_media"
+                            android:visibility="gone"/>
+                        <ImageView
+                            android:id="@+id/media_type1"
+                            android:layout_width="@dimen/_10sdp"
+                            android:layout_height="@dimen/_10sdp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            android:layout_margin="@dimen/_5sdp"
                             android:src="@drawable/remove_media"
                             android:visibility="gone"/>
                     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -111,10 +131,10 @@
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/media2_CV"
                     android:layout_width="0dp"
-                    android:layout_height="@dimen/_90sdp"
+                    android:layout_height="@dimen/_80sdp"
                     android:layout_weight="1"
                     app:cardCornerRadius="@dimen/_5sdp"
-                    android:layout_marginStart="@dimen/_10sdp">
+                    android:layout_marginStart="@dimen/_13sdp">
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent">
@@ -127,14 +147,35 @@
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintBottom_toBottomOf="parent"
                             android:src="@drawable/choose_media"
-                            android:scaleType="fitXY"/>
+                            android:scaleType="centerCrop"
+                            />
+                        <ImageView
+                            android:id="@+id/media_shadow2"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            android:src="@color/black"
+                            android:alpha="0.30"
+                            android:visibility="gone"/>
                         <ImageView
                             android:id="@+id/delete_media2"
-                            android:layout_width="@dimen/_10sdp"
-                            android:layout_height="@dimen/_10sdp"
+                            android:layout_width="@dimen/_15sdp"
+                            android:layout_height="@dimen/_15sdp"
                             app:layout_constraintTop_toTopOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
-                            android:layout_margin="@dimen/_10sdp"
+                            android:layout_margin="@dimen/_5sdp"
+                            android:src="@drawable/remove_media"
+                            android:visibility="gone"/>
+                        <ImageView
+                            android:id="@+id/media_type2"
+                            android:layout_width="@dimen/_10sdp"
+                            android:layout_height="@dimen/_10sdp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            android:layout_margin="@dimen/_5sdp"
                             android:src="@drawable/remove_media"
                             android:visibility="gone"/>
                     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -149,10 +190,10 @@
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/media3_CV"
                     android:layout_width="0dp"
-                    android:layout_height="@dimen/_90sdp"
+                    android:layout_height="@dimen/_80sdp"
                     android:layout_weight="1"
                     app:cardCornerRadius="@dimen/_5sdp"
-                    android:layout_marginEnd="@dimen/_10sdp">
+                    android:layout_marginEnd="@dimen/_13sdp">
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent">
@@ -165,14 +206,35 @@
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintBottom_toBottomOf="parent"
                             android:src="@drawable/choose_media"
-                            android:scaleType="fitXY"/>
+                            android:scaleType="centerCrop"
+                            />
+                        <ImageView
+                            android:id="@+id/media_shadow3"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            android:src="@color/black"
+                            android:alpha="0.30"
+                            android:visibility="gone"/>
                         <ImageView
                             android:id="@+id/delete_media3"
-                            android:layout_width="@dimen/_10sdp"
-                            android:layout_height="@dimen/_10sdp"
+                            android:layout_width="@dimen/_15sdp"
+                            android:layout_height="@dimen/_15sdp"
                             app:layout_constraintTop_toTopOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
-                            android:layout_margin="@dimen/_10sdp"
+                            android:layout_margin="@dimen/_5sdp"
+                            android:src="@drawable/remove_media"
+                            android:visibility="gone"/>
+                        <ImageView
+                            android:id="@+id/media_type3"
+                            android:layout_width="@dimen/_10sdp"
+                            android:layout_height="@dimen/_10sdp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            android:layout_margin="@dimen/_5sdp"
                             android:src="@drawable/remove_media"
                             android:visibility="gone"/>
                     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -181,10 +243,10 @@
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/media4_CV"
                     android:layout_width="0dp"
-                    android:layout_height="@dimen/_90sdp"
+                    android:layout_height="@dimen/_80sdp"
                     android:layout_weight="1"
                     app:cardCornerRadius="@dimen/_5sdp"
-                    android:layout_marginStart="@dimen/_10sdp">
+                    android:layout_marginStart="@dimen/_13sdp">
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent">
@@ -197,14 +259,35 @@
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintBottom_toBottomOf="parent"
                             android:src="@drawable/choose_media"
-                            android:scaleType="fitXY"/>
+                            android:scaleType="centerCrop"
+                            />
+                        <ImageView
+                            android:id="@+id/media_shadow4"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            android:src="@color/black"
+                            android:alpha="0.30"
+                            android:visibility="gone"/>
                         <ImageView
                             android:id="@+id/delete_media4"
-                            android:layout_width="@dimen/_10sdp"
-                            android:layout_height="@dimen/_10sdp"
+                            android:layout_width="@dimen/_15sdp"
+                            android:layout_height="@dimen/_15sdp"
                             app:layout_constraintTop_toTopOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
-                            android:layout_margin="@dimen/_10sdp"
+                            android:layout_margin="@dimen/_5sdp"
+                            android:src="@drawable/remove_media"
+                            android:visibility="gone"/>
+                        <ImageView
+                            android:id="@+id/media_type4"
+                            android:layout_width="@dimen/_10sdp"
+                            android:layout_height="@dimen/_10sdp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            android:layout_margin="@dimen/_5sdp"
                             android:src="@drawable/remove_media"
                             android:visibility="gone"/>
                     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -219,10 +302,10 @@
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/media5_CV"
                     android:layout_width="0dp"
-                    android:layout_height="@dimen/_90sdp"
+                    android:layout_height="@dimen/_80sdp"
                     android:layout_weight="1"
                     app:cardCornerRadius="@dimen/_5sdp"
-                    android:layout_marginEnd="@dimen/_10sdp">
+                    android:layout_marginEnd="@dimen/_13sdp">
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent">
@@ -235,14 +318,34 @@
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintBottom_toBottomOf="parent"
                             android:src="@drawable/choose_media"
-                            android:scaleType="fitXY"/>
+                            android:scaleType="centerCrop"/>
+                        <ImageView
+                            android:id="@+id/media_shadow5"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            android:src="@color/black"
+                            android:alpha="0.30"
+                            android:visibility="gone"/>
                         <ImageView
                             android:id="@+id/delete_media5"
-                            android:layout_width="@dimen/_10sdp"
-                            android:layout_height="@dimen/_10sdp"
+                            android:layout_width="@dimen/_15sdp"
+                            android:layout_height="@dimen/_15sdp"
                             app:layout_constraintTop_toTopOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
-                            android:layout_margin="@dimen/_10sdp"
+                            android:layout_margin="@dimen/_5sdp"
+                            android:src="@drawable/remove_media"
+                            android:visibility="gone"/>
+                        <ImageView
+                            android:id="@+id/media_type5"
+                            android:layout_width="@dimen/_10sdp"
+                            android:layout_height="@dimen/_10sdp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            android:layout_margin="@dimen/_5sdp"
                             android:src="@drawable/remove_media"
                             android:visibility="gone"/>
                     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -251,10 +354,10 @@
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/media6_CV"
                     android:layout_width="0dp"
-                    android:layout_height="@dimen/_90sdp"
+                    android:layout_height="@dimen/_80sdp"
                     android:layout_weight="1"
                     app:cardCornerRadius="@dimen/_5sdp"
-                    android:layout_marginStart="@dimen/_10sdp">
+                    android:layout_marginStart="@dimen/_13sdp">
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent">
@@ -267,14 +370,34 @@
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintBottom_toBottomOf="parent"
                             android:src="@drawable/choose_media"
-                            android:scaleType="fitXY"/>
+                            android:scaleType="centerCrop"/>
+                        <ImageView
+                            android:id="@+id/media_shadow6"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            android:src="@color/black"
+                            android:alpha="0.30"
+                            android:visibility="gone"/>
                         <ImageView
                             android:id="@+id/delete_media6"
-                            android:layout_width="@dimen/_10sdp"
-                            android:layout_height="@dimen/_10sdp"
+                            android:layout_width="@dimen/_15sdp"
+                            android:layout_height="@dimen/_15sdp"
                             app:layout_constraintTop_toTopOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
-                            android:layout_margin="@dimen/_10sdp"
+                            android:layout_margin="@dimen/_5sdp"
+                            android:src="@drawable/remove_media"
+                            android:visibility="gone"/>
+                        <ImageView
+                            android:id="@+id/media_type6"
+                            android:layout_width="@dimen/_10sdp"
+                            android:layout_height="@dimen/_10sdp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            android:layout_margin="@dimen/_5sdp"
                             android:src="@drawable/remove_media"
                             android:visibility="gone"/>
                     </androidx.constraintlayout.widget.ConstraintLayout>

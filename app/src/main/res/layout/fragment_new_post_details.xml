@@ -8,7 +8,6 @@
     android:background="@drawable/main_background"
     tools:context=".views.main.newpost.NewPostDetailsFragment">
 
-
     <include
         android:id="@+id/toolbar_layout"
         layout="@layout/toolbar2_layout"
