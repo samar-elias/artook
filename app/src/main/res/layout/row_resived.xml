@@ -43,7 +43,7 @@
             android:visibility="gone"
 
             android:text="time"
-            android:textSize="@dimen/_16sdp"
+            android:textSize="@dimen/_12sdp"
             app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

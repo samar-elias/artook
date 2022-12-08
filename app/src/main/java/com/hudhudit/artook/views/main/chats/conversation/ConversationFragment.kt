@@ -190,6 +190,7 @@ class ConversationFragment : Fragment() {
                         }
 
                     }*/
+
                     adapter = MessageChatAdapter(messagesArrayList!!,userChatModel)
                     iJustWantToScroll()
 

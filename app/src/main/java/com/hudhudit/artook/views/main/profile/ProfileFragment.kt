@@ -2,6 +2,7 @@ package com.hudhudit.artook.views.main.profile
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,8 +11,14 @@ import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import com.bumptech.glide.Glide
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.hudhudit.artook.apputils.appdefs.AppDefs
@@ -23,6 +30,9 @@ import com.hudhudit.artook.apputils.modules.profile.ProfileCounts
 import com.hudhudit.artook.apputils.modules.user.UserData
 import com.hudhudit.artook.apputils.remote.RetrofitAPIs
 import com.hudhudit.artook.R
+import com.hudhudit.artook.apputils.appdefs.AppConstants
+import com.hudhudit.artook.apputils.modules.chat.UserChatModel
+import com.hudhudit.artook.apputils.remote.utill.Resource
 import com.hudhudit.artook.views.main.comments.CommentsFragment
 import com.hudhudit.artook.views.main.MainActivity
 import com.hudhudit.artook.views.main.notifications.NotificationsFragment
@@ -31,6 +41,8 @@ import com.hudhudit.artook.views.main.profile.edit.EditProfileFragment
 import com.hudhudit.artook.views.main.profile.followers.FollowersFragment
 import com.hudhudit.artook.views.main.profile.following.FollowingFragment
 import com.hudhudit.artook.databinding.FragmentProfileBinding
+import com.hudhudit.artook.views.main.chats.ChatAdapter
+import com.hudhudit.artook.views.main.chats.ChatViewModel
 import com.hudhudit.artook.views.main.chats.ChatsFragment
 import com.hudhudit.artook.views.main.chats.conversation.ConversationFragment
 import dagger.hilt.android.AndroidEntryPoint
@@ -51,6 +63,8 @@ class ProfileFragment : Fragment() {
     var page = 1
     var isFeeds = true
 
+    private val viewModel by viewModels<ChatViewModel>()
+    var listChatModel: MutableList<UserChatModel>? = null
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -81,6 +95,7 @@ class ProfileFragment : Fragment() {
         AppDefs.media4Uri = null
         AppDefs.media5Uri = null
         AppDefs.media6Uri = null
+        getChat()
     }
 
     private fun onClick(){
@@ -415,4 +430,60 @@ class ProfileFragment : Fragment() {
         fragmentTransaction.addToBackStack("Notifications")
         fragmentTransaction.commit()
     }
+    private fun getChat() {
+        viewModel.getChat(AppDefs.user.results!!.id)
+        viewModel.chatStatus.observe(viewLifecycleOwner, Observer {
+            if(it != null){
+                if (it!!.status == Resource.Status.SUCCESS) {
+                    listChatModel=it.data!!.toMutableList()
+
+                   listChatModel!!.filter { AppDefs.user.results!!.id == it.userLoginId}.forEach {
+                        it.countMassage
+                        Log.d("countmes",it.toString())
+                        //Log.d("countmes", it.countMassage.toString())
+
+
+                    }
+                    var x=getCount(listChatModel!!)
+                    if (x>0){
+                        binding.statusRed.visibility=View.VISIBLE
+                    }else{
+                        binding.statusRed.visibility=View.GONE
+                    }
+                    Log.d("countmes",x.toString())
+
+
+                 /*   if (AppDefs.user.results!!.id == item.userOwnerItemId) {
+                        if (item.countMassage == "0"){
+                            binding.statusRed.visibility=View.INVISIBLE
+                        }else{
+                            binding.statusRed.visibility=View.VISIBLE
+
+                        }
+
+                    }*/
+
+                }
+                if (it!!.status == Resource.Status.ERROR) {
+                    Toast.makeText(requireContext(), it.message.toString(), Toast.LENGTH_SHORT).show()
+                }
+            }
+            viewModel.reset()
+        })
+
+    }
+    fun getCount(listChatModel1:MutableList<UserChatModel>):Int{
+        var msgCount=0
+        listChatModel1!!.forEach {
+            if (AppDefs.user.results!!.id == it.userLoginId){
+                msgCount+=it.countMessageOwnerItem!!.toInt()
+            }else{
+                msgCount+=it.countMassage!!.toInt()
+            }
+
+        }
+        return msgCount
+    }
+
+
 }
