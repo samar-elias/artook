@@ -1,6 +1,7 @@
 package com.hudhudit.artook.views.main.newpost
 
 import android.content.Context
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -19,7 +20,11 @@ import com.google.gson.reflect.TypeToken
 import com.hudhudit.artook.R
 import com.hudhudit.artook.apputils.appdefs.AppDefs
 import com.hudhudit.artook.apputils.appdefs.Urls
+import com.hudhudit.artook.apputils.modules.booleanresponse.BooleanResponse
+import com.hudhudit.artook.apputils.modules.post.Image
 import com.hudhudit.artook.apputils.modules.post.NewPostMedia
+import com.hudhudit.artook.apputils.modules.post.UploadedFile
+import com.hudhudit.artook.apputils.modules.post.Video
 import com.hudhudit.artook.apputils.modules.search.Categories
 import com.hudhudit.artook.apputils.modules.search.Category
 import com.hudhudit.artook.apputils.modules.user.UserData
@@ -27,9 +32,12 @@ import com.hudhudit.artook.apputils.remote.RetrofitAPIs
 import com.hudhudit.artook.databinding.FragmentPostDetailsBinding
 import com.hudhudit.artook.views.main.MainActivity
 import com.hudhudit.artook.views.main.newpost.Adapter.MediaAdapter
+import com.hudhudit.artook.views.splash.SplashActivity
 import kotlinx.android.synthetic.main.media_layout.*
 import okhttp3.Interceptor
+import okhttp3.MultipartBody
 import okhttp3.OkHttpClient
+import okhttp3.RequestBody
 import org.json.JSONArray
 import org.json.JSONObject
 import retrofit2.Call
@@ -43,11 +51,12 @@ class PostDetailsFragment : Fragment() {
 
     lateinit var binding: FragmentPostDetailsBinding
     lateinit var mainActivity: MainActivity
-    var images: ArrayList<String> = ArrayList()
-    var videos: ArrayList<String> = ArrayList()
+    var images: ArrayList<Image> = ArrayList()
+    var videos: ArrayList<Video> = ArrayList()
     var mediaUris: ArrayList<NewPostMedia> = ArrayList()
     var categories: ArrayList<Category> = ArrayList()
     var categoryId = ""
+    var description = ""
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -75,8 +84,8 @@ class PostDetailsFragment : Fragment() {
     }
 
     private fun init(){
-        images = requireArguments().getStringArrayList("images")!!
-        videos = requireArguments().getStringArrayList("videos")!!
+//        images = requireArguments().getStringArrayList("images")!!
+//        videos = requireArguments().getStringArrayList("videos")!!
         mediaUris = requireArguments().getParcelableArrayList("uris")!!
         setData()
     }
@@ -91,30 +100,7 @@ class PostDetailsFragment : Fragment() {
 
             override fun onNothingSelected(adapterView: AdapterView<*>?) {}
         }
-//        binding.deleteMedia1.setOnClickListener {
-//            binding.media1CV.visibility = View.GONE
-//            mediaUris.removeAt(0)
-//        }
-//        binding.deleteMedia2.setOnClickListener {
-//            binding.media2CV.visibility = View.GONE
-//            mediaUris.removeAt(1)
-//        }
-//        binding.deleteMedia3.setOnClickListener {
-//            binding.media3CV.visibility = View.GONE
-//            mediaUris.removeAt(2)
-//        }
-//        binding.deleteMedia4.setOnClickListener {
-//            binding.media4CV.visibility = View.GONE
-//            mediaUris.removeAt(3)
-//        }
-//        binding.deleteMedia5.setOnClickListener {
-//            binding.media5CV.visibility = View.GONE
-//            mediaUris.removeAt(4)
-//        }
-//        binding.deleteMedia6.setOnClickListener {
-//            binding.media6CV.visibility = View.GONE
-//            mediaUris.removeAt(5)
-//        }
+
     }
 
     private fun setData(){
@@ -176,12 +162,32 @@ class PostDetailsFragment : Fragment() {
     }
 
     private fun checkValidation(){
-        val description = binding.descriptionEdt.text
+        description = binding.descriptionEdt.text.toString()
         if(categoryId == "0"){
             Toast.makeText(mainActivity, resources.getString(R.string.select_a_category), Toast.LENGTH_SHORT).show()
         }else if (description!!.isEmpty()){
             Toast.makeText(mainActivity, resources.getString(R.string.enter_description), Toast.LENGTH_SHORT).show()
         }else{
+            fillUris()
+        }
+    }
+
+    private fun fillUris(){
+        images.clear()
+        videos.clear()
+
+        if (mediaUris.size == 0){
+            Toast.makeText(mainActivity, resources.getString(R.string.add_media), Toast.LENGTH_SHORT).show()
+        }else{
+            for (uri in mediaUris){
+                if (uri.mediaType == "0"){
+                    val image = Image(mainActivity.fileUriToBase64(uri.mediaUri, mainActivity.contentResolver)!!, uri.ext)
+                    images.add(image)
+                }else if (uri.mediaType == "1"){
+                    val video = Video(mainActivity.fileUriToBase64(uri.mediaUri, mainActivity.contentResolver)!!, uri.ext)
+                    videos.add(video)
+                }
+            }
             createJson()
         }
     }
@@ -190,13 +196,15 @@ class PostDetailsFragment : Fragment() {
         val imagesArray = JSONArray()
         for (image in images){
             val imageObj = JSONObject()
-            imageObj.put("image", image)
+            imageObj.put("image", image.image)
+            imageObj.put("type", image.type)
             imagesArray.put(imageObj)
         }
         val videosArray = JSONArray()
         for (video in videos){
             val videoObj = JSONObject()
-            videoObj.put("video", video)
+            videoObj.put("video", video.video)
+            videoObj.put("type", video.type)
             videosArray.put(videoObj)
         }
         val mediaObj = JSONObject()
@@ -207,7 +215,7 @@ class PostDetailsFragment : Fragment() {
         var tempFile: File? = null
         var writer: BufferedWriter? = null
 
-        tempFile = File.createTempFile("MyTempFile", ".txt")
+        tempFile = File.createTempFile("TempFile", ".txt")
         writer = BufferedWriter(
             FileWriter(tempFile)
         )
@@ -218,22 +226,105 @@ class PostDetailsFragment : Fragment() {
                 + tempFile.absoluteFile
         )
 
-        val path: String = tempFile.getPath()
+        val path: String = tempFile.path
 
-        val fileReader = FileReader(path)
-        val bufferedReader = BufferedReader(fileReader)
-        var buffer: String?
-        val stringBuilder = StringBuilder()
+        uploadFile(path)
 
-        while (bufferedReader.readLine().also { buffer = it } != null) {
-            stringBuilder.append(buffer)
+//
+//        val fileReader = FileReader(path)
+//        val bufferedReader = BufferedReader(fileReader)
+//        var buffer: String?
+//        val stringBuilder = StringBuilder()
+//
+//        while (bufferedReader.readLine().also { buffer = it } != null) {
+//            stringBuilder.append(buffer)
+//        }
+//
+//        deleteTempFiles(mainActivity.cacheDir)
+//
+//        while (bufferedReader.readLine().also { buffer = it } != null) {
+//            stringBuilder.append(buffer)
+//        }
+    }
+
+    private fun uploadFile(file: String){
+        binding.progressBar.visibility = View.VISIBLE
+        var image: MultipartBody.Part? = null
+        if (file.isNotEmpty()){
+            image = mainActivity.createMultipartBodyPart("image", file)!!
         }
+        val okHttpClient = OkHttpClient.Builder().apply {
+            addInterceptor(
+                Interceptor { chain ->
+                    val builder = chain.request().newBuilder()
+                    builder.header("Content-Type", "application/json; charset=UTF-8")
+                    builder.header("Authorization", AppDefs.user.token!!)
+                    return@Interceptor chain.proceed(builder.build())
+                }
+            )
+        }.build()
+        val retrofit: Retrofit = Retrofit.Builder().baseUrl(Urls.BASE_URL).client(okHttpClient)
+            .addConverterFactory(GsonConverterFactory.create()).build()
+        val updateProfileCall: Call<UploadedFile> =
+            retrofit.create(RetrofitAPIs::class.java).uploadFile(image)
+        updateProfileCall.enqueue(object : Callback<UploadedFile> {
+            override fun onResponse(call: Call<UploadedFile>, response: Response<UploadedFile>) {
+                binding.progressBar.visibility = View.GONE
+                if (response.isSuccessful){
+                    createPost(response.body()!!.results)
+                }else{
+                    val gson = Gson()
+                    val type = object : TypeToken<UserData>() {}.type //ErrorResponse is the data class that matches the error response
+                    val errorResponse = gson.fromJson<UserData>(response.errorBody()!!.charStream(), type) // errorResponse is an instance of ErrorResponse that will contain details about the error
+                    Toast.makeText(mainActivity, errorResponse.status.massage.toString(), Toast.LENGTH_SHORT).show()
 
-        deleteTempFiles(mainActivity.cacheDir)
+                }
+            }
 
-        while (bufferedReader.readLine().also { buffer = it } != null) {
-            stringBuilder.append(buffer)
-        }
+            override fun onFailure(call: Call<UploadedFile>, t: Throwable) {
+                binding.progressBar.visibility = View.GONE
+//                //Toast.makeText(mainActivity, resources.getString(R.string.internet_connection), Toast.LENGTH_SHORT).show()
+            }
+
+        })
+    }
+
+    private fun createPost(file: String){
+        val okHttpClient = OkHttpClient.Builder().apply {
+            addInterceptor(
+                Interceptor { chain ->
+                    val builder = chain.request().newBuilder()
+                    builder.header("Content-Type", "application/json; charset=UTF-8")
+                    builder.header("Authorization", AppDefs.user.token!!)
+                    return@Interceptor chain.proceed(builder.build())
+                }
+            )
+        }.build()
+        val retrofit: Retrofit = Retrofit.Builder().baseUrl(Urls.BASE_URL).client(okHttpClient)
+            .addConverterFactory(GsonConverterFactory.create()).build()
+        val updateProfileCall: Call<BooleanResponse> =
+            retrofit.create(RetrofitAPIs::class.java).createPost(categoryId, description, file)
+        updateProfileCall.enqueue(object : Callback<BooleanResponse> {
+            override fun onResponse(call: Call<BooleanResponse>, response: Response<BooleanResponse>) {
+                if (response.isSuccessful){
+                    Toast.makeText(mainActivity, resources.getString(R.string.post_created), Toast.LENGTH_SHORT).show()
+                    val intent = Intent(mainActivity, SplashActivity::class.java)
+                    startActivity(intent)
+                    mainActivity.finish()
+                }else{
+                    val gson = Gson()
+                    val type = object : TypeToken<BooleanResponse>() {}.type //ErrorResponse is the data class that matches the error response
+                    val errorResponse = gson.fromJson<BooleanResponse>(response.errorBody()!!.charStream(), type) // errorResponse is an instance of ErrorResponse that will contain details about the error
+                    Toast.makeText(mainActivity, errorResponse.status.massage.toString(), Toast.LENGTH_SHORT).show()
+
+                }
+            }
+
+            override fun onFailure(call: Call<BooleanResponse>, t: Throwable) {
+                Toast.makeText(mainActivity, resources.getString(R.string.internet_connection), Toast.LENGTH_SHORT).show()
+            }
+
+        })
     }
 
     private fun deleteTempFiles(file: File): Boolean {

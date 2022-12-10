@@ -3,10 +3,7 @@ package com.hudhudit.artook.apputils.remote
 import com.hudhudit.artook.apputils.modules.booleanresponse.BooleanResponse
 import com.hudhudit.artook.apputils.modules.competition.*
 import com.hudhudit.artook.apputils.modules.notification.NotificationsResult
-import com.hudhudit.artook.apputils.modules.post.CommentsResult
-import com.hudhudit.artook.apputils.modules.post.CountsResult
-import com.hudhudit.artook.apputils.modules.post.PostResult
-import com.hudhudit.artook.apputils.modules.post.PostsResult
+import com.hudhudit.artook.apputils.modules.post.*
 import com.hudhudit.artook.apputils.modules.profile.FollowersResult
 import com.hudhudit.artook.apputils.modules.profile.FollowingsResult
 import com.hudhudit.artook.apputils.modules.profile.ProfileCounts
@@ -149,16 +146,14 @@ interface RetrofitAPIs {
       fun createPost(@Field("category_id") category_id: String,
                      @Field("description") description: String,
                      @Field("files") image: String): Call<BooleanResponse>*/
-    @Multipart
-    @Headers("Accept:*/*")
+
+    @FormUrlEncoded
     @POST("create_posts")
     fun createPost(
-        @Part("category_id") category_id: RequestBody?,
-        @Part("description") description: RequestBody?,
-        @Part files: Array<MultipartBody.Part?>
-
+        @Field("category_id") category_id: String,
+        @Field("description") description: String,
+        @Field("files") files: String
     ): Call<BooleanResponse>
-
 
 
     @FormUrlEncoded
@@ -302,5 +297,11 @@ interface RetrofitAPIs {
     @POST("add_contests_participat_vote")
     fun vote(@Field("contests_participat_id") contests_participat_id: String): Call<VoteResult>
 
+
+    @Multipart
+    @POST("upload_files")
+    fun uploadFile(
+        @Part image: MultipartBody.Part?
+    ): Call<UploadedFile>
 
 }

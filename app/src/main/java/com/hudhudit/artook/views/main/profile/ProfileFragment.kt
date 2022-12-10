@@ -45,6 +45,7 @@ import com.hudhudit.artook.views.main.chats.ChatAdapter
 import com.hudhudit.artook.views.main.chats.ChatViewModel
 import com.hudhudit.artook.views.main.chats.ChatsFragment
 import com.hudhudit.artook.views.main.chats.conversation.ConversationFragment
+import com.hudhudit.artook.views.main.newpost.UploadMediaNewPostFragment
 import dagger.hilt.android.AndroidEntryPoint
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -100,6 +101,7 @@ class ProfileFragment : Fragment() {
 
     private fun onClick(){
         binding.toolbarLayout.navigateBack.setOnClickListener { mainActivity.supportFragmentManager.popBackStack() }
+        binding.toolbarLayout.newPost.setOnClickListener { navigateToNewPost() }
         binding.profileBtn.setOnClickListener { navigateToEditProfile() }
         binding.followersLayout.setOnClickListener { navigateToMyFollowers() }
         binding.followingLayout.setOnClickListener { navigateToMyFollowings() }
@@ -485,5 +487,12 @@ class ProfileFragment : Fragment() {
         return msgCount
     }
 
-
+    private fun navigateToNewPost(){
+        val fragment: Fragment = UploadMediaNewPostFragment()
+        val fragmentManager: FragmentManager = mainActivity.supportFragmentManager
+        val fragmentTransaction: FragmentTransaction = fragmentManager.beginTransaction()
+        fragmentTransaction.replace(R.id.container, fragment)
+        fragmentTransaction.addToBackStack("NewPost")
+        fragmentTransaction.commit()
+    }
 }
