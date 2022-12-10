@@ -136,69 +136,69 @@ class NewPostFragment : Fragment() {
 
     }
 
-    private fun createPost( uri: Uri) {
-        val okHttpClient = OkHttpClient.Builder().apply {
-            addInterceptor(
-                Interceptor { chain ->
-                    val builder = chain.request().newBuilder()
-                    builder.header("Content-Type", "application/json; charset=UTF-8")
-                    builder.header("Authorization", AppDefs.user.token!!)
-                    return@Interceptor chain.proceed(builder.build())
-                }
-            )
-        }.build()
-        val retrofit: Retrofit = Retrofit.Builder().baseUrl(Urls.BASE_URL).client(okHttpClient)
-            .addConverterFactory(GsonConverterFactory.create()).build()
-        val category_id = createRequestBody("1")
-        val describtion = createRequestBody("test")
-        val image: MultipartBody.Part? = createMultipartBodyPart(
-            "ProfilePictureFile",
-            getPath(requireContext(), uri)!!
-        )
-        var x = mutableListOf<MultipartBody.Part>()
-        var z= Array<MultipartBody.Part?>(1,{image})
-
-        val updateProfileCall: Call<BooleanResponse> =
-            retrofit.create(RetrofitAPIs::class.java).createPost(category_id, describtion, z!!)
-
-        updateProfileCall.enqueue(object : Callback<BooleanResponse> {
-            override fun onResponse(
-                call: Call<BooleanResponse>,
-                response: Response<BooleanResponse>
-            ) {
-                Log.d("error",x.toString())
-                if (response.isSuccessful) {
-                    Toast.makeText(mainActivity, "add sussess", Toast.LENGTH_SHORT).show()
-                } else {
-                    val gson = Gson()
-                    val type = object :
-                        TypeToken<BooleanResponse>() {}.type //ErrorResponse is the data class that matches the error response
-                    val errorResponse = gson.fromJson<BooleanResponse>(
-                        response.errorBody()!!.charStream(),
-                        type
-                    ) // errorResponse is an instance of ErrorResponse that will contain details about the error
-                    //    Toast.makeText(mainActivity, errorResponse.status.massage.toString(), Toast.LENGTH_SHORT).show()
-                    Log.d("error", response.toString())
-                    Log.d("myLogs", response.toString());
-                    Log.d("myLogs",response.errorBody().toString());
-                    Log.d("myLogs", response.code().toString());
-                    Log.d("myLogs", response.toString());
-
-
-                }
-            }
-
-            override fun onFailure(call: Call<BooleanResponse>, t: Throwable) {
-                Log.d("error", t.toString())
-                Toast.makeText(
-                    mainActivity,
-                    resources.getString(R.string.internet_connection),
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
-
-        })
-    }
+//    private fun createPost( uri: Uri) {
+//        val okHttpClient = OkHttpClient.Builder().apply {
+//            addInterceptor(
+//                Interceptor { chain ->
+//                    val builder = chain.request().newBuilder()
+//                    builder.header("Content-Type", "application/json; charset=UTF-8")
+//                    builder.header("Authorization", AppDefs.user.token!!)
+//                    return@Interceptor chain.proceed(builder.build())
+//                }
+//            )
+//        }.build()
+//        val retrofit: Retrofit = Retrofit.Builder().baseUrl(Urls.BASE_URL).client(okHttpClient)
+//            .addConverterFactory(GsonConverterFactory.create()).build()
+//        val category_id = createRequestBody("1")
+//        val describtion = createRequestBody("test")
+//        val image: MultipartBody.Part? = createMultipartBodyPart(
+//            "ProfilePictureFile",
+//            getPath(requireContext(), uri)!!
+//        )
+//        var x = mutableListOf<MultipartBody.Part>()
+//        var z= Array<MultipartBody.Part?>(1,{image})
+//
+//        val updateProfileCall: Call<BooleanResponse> =
+//            retrofit.create(RetrofitAPIs::class.java).createPost(category_id, describtion, z!!)
+//
+//        updateProfileCall.enqueue(object : Callback<BooleanResponse> {
+//            override fun onResponse(
+//                call: Call<BooleanResponse>,
+//                response: Response<BooleanResponse>
+//            ) {
+//                Log.d("error",x.toString())
+//                if (response.isSuccessful) {
+//                    Toast.makeText(mainActivity, "add sussess", Toast.LENGTH_SHORT).show()
+//                } else {
+//                    val gson = Gson()
+//                    val type = object :
+//                        TypeToken<BooleanResponse>() {}.type //ErrorResponse is the data class that matches the error response
+//                    val errorResponse = gson.fromJson<BooleanResponse>(
+//                        response.errorBody()!!.charStream(),
+//                        type
+//                    ) // errorResponse is an instance of ErrorResponse that will contain details about the error
+//                    //    Toast.makeText(mainActivity, errorResponse.status.massage.toString(), Toast.LENGTH_SHORT).show()
+//                    Log.d("error", response.toString())
+//                    Log.d("myLogs", response.toString());
+//                    Log.d("myLogs",response.errorBody().toString());
+//                    Log.d("myLogs", response.code().toString());
+//                    Log.d("myLogs", response.toString());
+//
+//
+//                }
+//            }
+//
+//            override fun onFailure(call: Call<BooleanResponse>, t: Throwable) {
+//                Log.d("error", t.toString())
+//                Toast.makeText(
+//                    mainActivity,
+//                    resources.getString(R.string.internet_connection),
+//                    Toast.LENGTH_SHORT
+//                ).show()
+//            }
+//
+//        })
+//    }
     @RequiresApi(Build.VERSION_CODES.P)
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -227,7 +227,7 @@ class NewPostFragment : Fragment() {
                 //image2Path= resultUri!!
 
                // var mymulti=postImage(list)
-               createPost(resultUri!!)
+//               createPost(resultUri!!)
 
 
 

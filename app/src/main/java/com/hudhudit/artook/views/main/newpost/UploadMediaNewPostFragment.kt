@@ -449,12 +449,18 @@ class UploadMediaNewPostFragment : Fragment() {
                         }else if (requestCode == REQUEST_TAKE_GALLERY_VIDEO){
                             media1Type = "1"
                         }
-                        mediaUris.add(NewPostMedia(uri!!, media1Type, 1))
+                        val path = mainActivity.getPath(uri)
+                        val ext = path!!.substring(path.lastIndexOf(".")+1)
+                        mediaUris.add(NewPostMedia(uri!!, media1Type, 1, ext))
                     }else{
-                        val index = mediaUris.indexOf(NewPostMedia(media1Uri!!, media1Type, 1))
+                        val path = mainActivity.getPath(uri)
+                        val ext = path!!.substring(path.lastIndexOf(".")+1)
+                        val index = mediaUris.indexOf(NewPostMedia(media1Uri!!, media1Type, 1, ext))
                         if (index == (current-1)){
                             mediaUris.removeAt(index)
-                            mediaUris.add(index, NewPostMedia(uri!!, media1Type, 1))
+                            val path = mainActivity.getPath(uri)
+                            val ext = path!!.substring(path.lastIndexOf(".")+1)
+                            mediaUris.add(index, NewPostMedia(uri!!, media1Type, 1, ext))
                             if (requestCode == REQUEST_IMAGE_GALLERY){
                                 mediaUris[index].mediaType = "0"
                             }else if (requestCode == REQUEST_TAKE_GALLERY_VIDEO){
@@ -466,7 +472,9 @@ class UploadMediaNewPostFragment : Fragment() {
                             }else if (requestCode == REQUEST_TAKE_GALLERY_VIDEO){
                                 media1Type = "1"
                             }
-                            mediaUris.add(NewPostMedia(uri!!, media1Type, 1))
+                            val path = mainActivity.getPath(uri)
+                            val ext = path!!.substring(path.lastIndexOf(".")+1)
+                            mediaUris.add(NewPostMedia(uri!!, media1Type, 1, ext))
                         }
 
                     }
@@ -480,12 +488,18 @@ class UploadMediaNewPostFragment : Fragment() {
                         }else if (requestCode == REQUEST_TAKE_GALLERY_VIDEO){
                             media2Type = "1"
                         }
-                        mediaUris.add(NewPostMedia(uri!!, media2Type, 2))
+                        val path = mainActivity.getPath(uri)
+                        val ext = path!!.substring(path.lastIndexOf(".")+1)
+                        mediaUris.add(NewPostMedia(uri!!, media2Type, 2, ext))
                     }else{
-                        val index = mediaUris.indexOf(NewPostMedia(media2Uri!!, media2Type, 2))
+                        val path = mainActivity.getPath(uri)
+                        val ext = path!!.substring(path.lastIndexOf(".")+1)
+                        val index = mediaUris.indexOf(NewPostMedia(media2Uri!!, media2Type, 2, ext))
                         if (index == (current-1)){
                             mediaUris.removeAt(index)
-                            mediaUris.add(index, NewPostMedia(uri!!, media2Type, 2))
+                            val path = mainActivity.getPath(uri)
+                            val ext = path!!.substring(path.lastIndexOf(".")+1)
+                            mediaUris.add(index, NewPostMedia(uri!!, media2Type, 2, ext))
                             if (requestCode == REQUEST_IMAGE_GALLERY){
                                 mediaUris[index].mediaType = "0"
                             }else if (requestCode == REQUEST_TAKE_GALLERY_VIDEO){
@@ -497,7 +511,9 @@ class UploadMediaNewPostFragment : Fragment() {
                             }else if (requestCode == REQUEST_TAKE_GALLERY_VIDEO){
                                 media2Type = "1"
                             }
-                            mediaUris.add(NewPostMedia(uri!!, media2Type, 2))
+                            val path = mainActivity.getPath(uri)
+                            val ext = path!!.substring(path.lastIndexOf(".")+1)
+                            mediaUris.add(NewPostMedia(uri!!, media2Type, 2, ext))
                         }
                     }
                     media2Uri = uri
@@ -510,12 +526,18 @@ class UploadMediaNewPostFragment : Fragment() {
                         }else if (requestCode == REQUEST_TAKE_GALLERY_VIDEO){
                             media3Type = "1"
                         }
-                        mediaUris.add(NewPostMedia(uri!!, media3Type, 3))
+                        val path = mainActivity.getPath(uri)
+                        val ext = path!!.substring(path.lastIndexOf(".")+1)
+                        mediaUris.add(NewPostMedia(uri!!, media3Type, 3, ext))
                     }else{
-                        val index = mediaUris.indexOf(NewPostMedia(media3Uri!!, media3Type, 3))
+                        val path = mainActivity.getPath(uri)
+                        val ext = path!!.substring(path.lastIndexOf(".")+1)
+                        val index = mediaUris.indexOf(NewPostMedia(media3Uri!!, media3Type, 3, ext))
                         if (index == (current-1)){
                             mediaUris.removeAt(index)
-                            mediaUris.add(index, NewPostMedia(uri!!, media3Type, 3))
+                            val path = mainActivity.getPath(uri)
+                            val ext = path!!.substring(path.lastIndexOf(".")+1)
+                            mediaUris.add(index, NewPostMedia(uri!!, media3Type, 3, ext))
                             if (requestCode == REQUEST_IMAGE_GALLERY){
                                 mediaUris[index].mediaType = "0"
                             }else if (requestCode == REQUEST_TAKE_GALLERY_VIDEO){
@@ -527,7 +549,9 @@ class UploadMediaNewPostFragment : Fragment() {
                             }else if (requestCode == REQUEST_TAKE_GALLERY_VIDEO){
                                 media3Type = "1"
                             }
-                            mediaUris.add(NewPostMedia(uri!!, media3Type, 3))
+                            val path = mainActivity.getPath(uri)
+                            val ext = path!!.substring(path.lastIndexOf(".")+1)
+                            mediaUris.add(NewPostMedia(uri!!, media3Type, 3, ext))
                         }
 
                     }
@@ -541,12 +565,18 @@ class UploadMediaNewPostFragment : Fragment() {
                         }else if (requestCode == REQUEST_TAKE_GALLERY_VIDEO){
                             media4Type = "1"
                         }
-                        mediaUris.add(NewPostMedia(uri!!, media4Type, 4))
+                        val path = mainActivity.getPath(uri)
+                        val ext = path!!.substring(path.lastIndexOf(".")+1)
+                        mediaUris.add(NewPostMedia(uri!!, media4Type, 4, ext))
                     }else{
-                        val index = mediaUris.indexOf(NewPostMedia(media4Uri!!, media4Type, 4))
+                        val path = mainActivity.getPath(uri)
+                        val ext = path!!.substring(path.lastIndexOf(".")+1)
+                        val index = mediaUris.indexOf(NewPostMedia(media4Uri!!, media4Type, 4, ext))
                         if (index == (current-1)){
                             mediaUris.removeAt(index)
-                            mediaUris.add(index, NewPostMedia(uri!!, media4Type, 4))
+                            val path = mainActivity.getPath(uri)
+                            val ext = path!!.substring(path.lastIndexOf(".")+1)
+                            mediaUris.add(index, NewPostMedia(uri!!, media4Type, 4, ext))
                             if (requestCode == REQUEST_IMAGE_GALLERY){
                                 mediaUris[index].mediaType = "0"
                             }else if (requestCode == REQUEST_TAKE_GALLERY_VIDEO){
@@ -558,7 +588,9 @@ class UploadMediaNewPostFragment : Fragment() {
                             }else if (requestCode == REQUEST_TAKE_GALLERY_VIDEO){
                                 media4Type = "1"
                             }
-                            mediaUris.add(NewPostMedia(uri!!, media4Type, 4))
+                            val path = mainActivity.getPath(uri)
+                            val ext = path!!.substring(path.lastIndexOf(".")+1)
+                            mediaUris.add(NewPostMedia(uri!!, media4Type, 4, ext))
                         }
 
                     }
@@ -572,12 +604,18 @@ class UploadMediaNewPostFragment : Fragment() {
                         }else if (requestCode == REQUEST_TAKE_GALLERY_VIDEO){
                             media5Type = "1"
                         }
-                        mediaUris.add(NewPostMedia(uri!!, media5Type, 5))
+                        val path = mainActivity.getPath(uri)
+                        val ext = path!!.substring(path.lastIndexOf(".")+1)
+                        mediaUris.add(NewPostMedia(uri!!, media5Type, 5, ext))
                     }else{
-                        val index = mediaUris.indexOf(NewPostMedia(media5Uri!!, media5Type, 5))
+                        val path = mainActivity.getPath(uri)
+                        val ext = path!!.substring(path.lastIndexOf(".")+1)
+                        val index = mediaUris.indexOf(NewPostMedia(media5Uri!!, media5Type, 5, ext))
                         if (index == (current-1)){
                             mediaUris.removeAt(index)
-                            mediaUris.add(index, NewPostMedia(uri!!, media5Type, 5))
+                            val path = mainActivity.getPath(uri)
+                            val ext = path!!.substring(path.lastIndexOf(".")+1)
+                            mediaUris.add(index, NewPostMedia(uri!!, media5Type, 5, ext))
                             if (requestCode == REQUEST_IMAGE_GALLERY){
                                 mediaUris[index].mediaType = "0"
                             }else if (requestCode == REQUEST_TAKE_GALLERY_VIDEO){
@@ -589,7 +627,9 @@ class UploadMediaNewPostFragment : Fragment() {
                             }else if (requestCode == REQUEST_TAKE_GALLERY_VIDEO){
                                 media5Type = "1"
                             }
-                            mediaUris.add(NewPostMedia(uri!!, media5Type, 5))
+                            val path = mainActivity.getPath(uri)
+                            val ext = path!!.substring(path.lastIndexOf(".")+1)
+                            mediaUris.add(NewPostMedia(uri!!, media5Type, 5, ext))
                         }
 
                     }
@@ -603,12 +643,18 @@ class UploadMediaNewPostFragment : Fragment() {
                         }else if (requestCode == REQUEST_TAKE_GALLERY_VIDEO){
                             media6Type = "1"
                         }
-                        mediaUris.add(NewPostMedia(uri!!, media6Type, 6))
+                        val path = mainActivity.getPath(uri)
+                        val ext = path!!.substring(path.lastIndexOf(".")+1)
+                        mediaUris.add(NewPostMedia(uri!!, media6Type, 6, ext))
                     }else{
-                        val index = mediaUris.indexOf(NewPostMedia(media6Uri!!, media6Type, 6))
+                        val path = mainActivity.getPath(uri)
+                        val ext = path!!.substring(path.lastIndexOf(".")+1)
+                        val index = mediaUris.indexOf(NewPostMedia(media6Uri!!, media6Type, 6, ext))
                         if (index == (current-1)){
                             mediaUris.removeAt(index)
-                            mediaUris.add(index, NewPostMedia(uri!!, media6Type, 6))
+                            val path = mainActivity.getPath(uri)
+                            val ext = path!!.substring(path.lastIndexOf(".")+1)
+                            mediaUris.add(index, NewPostMedia(uri!!, media6Type, 6, ext))
                             if (requestCode == REQUEST_IMAGE_GALLERY){
                                 mediaUris[index].mediaType = "0"
                             }else if (requestCode == REQUEST_TAKE_GALLERY_VIDEO){
@@ -620,7 +666,9 @@ class UploadMediaNewPostFragment : Fragment() {
                             }else if (requestCode == REQUEST_TAKE_GALLERY_VIDEO){
                                 media6Type = "1"
                             }
-                            mediaUris.add(NewPostMedia(uri!!, media6Type, 6))
+                            val path = mainActivity.getPath(uri)
+                            val ext = path!!.substring(path.lastIndexOf(".")+1)
+                            mediaUris.add(NewPostMedia(uri!!, media6Type, 6, ext))
                         }
 
                     }

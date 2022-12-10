@@ -24,6 +24,7 @@ import com.hudhudit.artook.apputils.modules.videosarticles.*
 import com.hudhudit.artook.apputils.remote.RetrofitAPIs
 import com.hudhudit.artook.databinding.FragmentVideosArticlesBinding
 import com.hudhudit.artook.views.main.MainActivity
+import com.hudhudit.artook.views.main.newpost.UploadMediaNewPostFragment
 import com.hudhudit.artook.views.main.notifications.NotificationsFragment
 import com.hudhudit.artook.views.main.videosarticles.adapters.ArticlesAdapter
 import com.hudhudit.artook.views.main.videosarticles.adapters.VideosAdapter
@@ -129,6 +130,7 @@ class VideosArticlesFragment : Fragment() {
             }
         }
         binding.toolbarLayout.notifications.setOnClickListener { navigateToNotifications() }
+        binding.toolbarLayout.newPost.setOnClickListener { navigateToNewPost() }
         binding.searchEdt.addTextChangedListener(object : TextWatcher {
 
             override fun afterTextChanged(s: Editable) {}
@@ -499,5 +501,14 @@ class VideosArticlesFragment : Fragment() {
          fragmentTransaction.replace(R.id.container, fragment)
          fragmentTransaction.addToBackStack("ArticleDetails")
          fragmentTransaction.commit()
+    }
+
+    private fun navigateToNewPost(){
+        val fragment: Fragment = UploadMediaNewPostFragment()
+        val fragmentManager: FragmentManager = mainActivity.supportFragmentManager
+        val fragmentTransaction: FragmentTransaction = fragmentManager.beginTransaction()
+        fragmentTransaction.replace(R.id.container, fragment)
+        fragmentTransaction.addToBackStack("NewPost")
+        fragmentTransaction.commit()
     }
 }

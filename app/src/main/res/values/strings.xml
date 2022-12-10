@@ -161,4 +161,5 @@
     <string name="add_media">Please add at least one media type!</string>
     <string name="select_category">Select Category</string>
     <string name="select_a_category">Please select a category!</string>
+    <string name="post_created">Post created succesfully!</string>
 </resources>
