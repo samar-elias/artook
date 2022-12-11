@@ -62,12 +62,12 @@ class UserProfileFragment : Fragment() {
     lateinit var userProfile: UserProfile
     var posts: ArrayList<Post> = ArrayList()
     var clientId = ""
-    var page = 1
-    private val viewModel by viewModels<ChatViewModel>()
-    var userChatModel: UserChatModel? = null
     var listChatModel: MutableList<UserChatModel>? = null
     //  lateinit var navController: NavController
 
+    var page = 1
+    private val viewModel by viewModels<ChatViewModel>()
+    var userChatModel: UserChatModel? = null
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
