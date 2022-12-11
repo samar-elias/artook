@@ -264,6 +264,7 @@
                     </androidx.constraintlayout.widget.ConstraintLayout>
                 </com.google.android.material.card.MaterialCardView>
                 <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/google_sign_up"
                     android:layout_width="@dimen/_30sdp"
                     android:layout_height="@dimen/_30sdp"
                     android:src="@drawable/google_icon"

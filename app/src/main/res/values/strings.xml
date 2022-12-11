@@ -3,6 +3,7 @@
     <string name="facebook_app_id" translatable="false">1239719876759899</string>
     <string name="fb_login_protocol_scheme" translatable="false">fb1239719876759899</string>
     <string name="facebook_client_token" translatable="false">ae4ee705f723ee6f86c0f8e1d601bd55</string>
+    <string name="google_client_id" translatable="false">618031766593-m2m3pu0l1oenkrk5s2r30t9h893e80d0.apps.googleusercontent.com</string>
     <string name="email_address">Email Address</string>
     <string name="password">Password</string>
     <string name="forgot_password">Forgot Password?</string>
@@ -161,5 +162,7 @@
     <string name="add_media">Please add at least one media type!</string>
     <string name="select_category">Select Category</string>
     <string name="select_a_category">Please select a category!</string>
-    <string name="post_created">Post created succesfully!</string>
+    <string name="post_created">Post created successfully!</string>
+    <string name="google_signup_failed">Google sign up failed!</string>
+
 </resources>

@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,17 +16,22 @@ import androidx.navigation.Navigation
 import com.facebook.CallbackManager
 import com.facebook.CallbackManager.Factory.create
 import com.facebook.FacebookSdk
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.common.api.ApiException
+import com.google.android.gms.tasks.Task
 import com.google.firebase.FirebaseApp
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import com.hudhudit.artook.R
 import com.hudhudit.artook.apputils.appdefs.Urls
 import com.hudhudit.artook.apputils.modules.booleanresponse.BooleanResponse
-import com.hudhudit.artook.apputils.modules.user.UserData
 import com.hudhudit.artook.apputils.modules.user.UserObj
 import com.hudhudit.artook.apputils.remote.RetrofitAPIs
-import com.hudhudit.artook.R
-import com.hudhudit.artook.views.registration.RegistrationActivity
 import com.hudhudit.artook.databinding.FragmentSignUpBinding
+import com.hudhudit.artook.views.registration.RegistrationActivity
 import dagger.hilt.android.AndroidEntryPoint
 import retrofit2.Call
 import retrofit2.Callback
@@ -43,6 +49,7 @@ class SignUpFragment : Fragment() {
     lateinit var navController: NavController
     lateinit var userObj: UserObj
     lateinit var mCallbackManager: CallbackManager
+    var googleSignInClient: GoogleSignInClient? = null
     private val GOOGLE_CODE = 0
 
     override fun onCreateView(
@@ -75,6 +82,12 @@ class SignUpFragment : Fragment() {
         mCallbackManager = create()
         binding.fbLoginButton.text = ""
         binding.fbLoginButton.setLoginText("")
+
+        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestIdToken(getString(R.string.google_client_id))
+            .requestEmail()
+            .build()
+        googleSignInClient = GoogleSignIn.getClient(registrationActivity, gso)
     }
 
     private fun onClick(){
@@ -113,6 +126,7 @@ class SignUpFragment : Fragment() {
                 }
             }
         })
+        binding.googleSignUp.setOnClickListener { signUpGoogle() }
 //        binding.fbLoginButton.setReadPermissions("email", "public_profile")
 //        binding.fbLoginButton.setFragment(this)
 //        binding.fbLoginButton.registerCallback(
@@ -276,12 +290,32 @@ class SignUpFragment : Fragment() {
         return matcher.matches()
     }
 
+    private fun signUpGoogle() {
+        val googleIntent: Intent = googleSignInClient!!.getSignInIntent()
+        startActivityForResult(googleIntent, GOOGLE_CODE)
+    }
+
+    private fun handleGoogleSignInResult(completedTask: Task<GoogleSignInAccount>) {
+        try {
+            val account = completedTask.getResult(ApiException::class.java)
+//            checkGoogleEmail(account.idToken, account.email)
+//            registrationActivity.hideProgressDialog()
+            Log.d("googleToken", account.idToken.toString())
+        } catch (e: ApiException) {
+            e.printStackTrace()
+            Toast.makeText(
+                registrationActivity,
+                registrationActivity.resources.getString(R.string.google_signup_failed),
+                Toast.LENGTH_SHORT
+            ).show()
+        }
+    }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == GOOGLE_CODE) {
-//            registrationActivity.hideProgressDialog()
-//            val task = GoogleSignIn.getSignedInAccountFromIntent(data)
-//            handleGoogleSignInResult(task)
+            val task = GoogleSignIn.getSignedInAccountFromIntent(data)
+            handleGoogleSignInResult(task)
         } else {
             mCallbackManager.onActivityResult(requestCode, resultCode, data)
             super.onActivityResult(requestCode, resultCode, data)
