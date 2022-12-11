@@ -2,10 +2,8 @@ package com.hudhudit.artook.views.main.newpost
 
 import android.content.Context
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,13 +11,14 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
-import com.bumptech.glide.Glide
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.hudhudit.artook.R
 import com.hudhudit.artook.apputils.appdefs.AppDefs
 import com.hudhudit.artook.apputils.appdefs.Urls
+import com.hudhudit.artook.apputils.appdefs.createMultipartBodyPart
 import com.hudhudit.artook.apputils.modules.booleanresponse.BooleanResponse
 import com.hudhudit.artook.apputils.modules.post.Image
 import com.hudhudit.artook.apputils.modules.post.NewPostMedia
@@ -55,6 +54,7 @@ class PostDetailsFragment : Fragment() {
     var videos: ArrayList<Video> = ArrayList()
     var mediaUris: ArrayList<NewPostMedia> = ArrayList()
     var categories: ArrayList<Category> = ArrayList()
+    var paths: ArrayList<String> = ArrayList()
     var categoryId = ""
     var description = ""
 
@@ -163,13 +163,71 @@ class PostDetailsFragment : Fragment() {
 
     private fun checkValidation(){
         description = binding.descriptionEdt.text.toString()
-        if(categoryId == "0"){
-            Toast.makeText(mainActivity, resources.getString(R.string.select_a_category), Toast.LENGTH_SHORT).show()
-        }else if (description!!.isEmpty()){
-            Toast.makeText(mainActivity, resources.getString(R.string.enter_description), Toast.LENGTH_SHORT).show()
-        }else{
-            fillUris()
+        when {
+            categoryId == "0" -> {
+                Toast.makeText(mainActivity, resources.getString(R.string.select_a_category), Toast.LENGTH_SHORT).show()
+            }
+            description!!.isEmpty() -> {
+                Toast.makeText(mainActivity, resources.getString(R.string.enter_description), Toast.LENGTH_SHORT).show()
+            }
+            else -> {
+//                fillUris()
+                getRealPaths()
+            }
         }
+    }
+
+    private fun getRealPaths(){
+        for (uri in mediaUris){
+            val path = mainActivity.getPath(uri.mediaUri)
+            paths.add(path!!)
+        }
+        createPost()
+    }
+
+    private fun createPost(){
+        binding.progressBar.visibility = View.VISIBLE
+        val catId: RequestBody = mainActivity.createRequestBody(categoryId)!!
+        val desc: RequestBody = mainActivity.createRequestBody(description)!!
+        val images: ArrayList<MultipartBody.Part> = ArrayList()
+        for (path in paths) {
+            images.add(createMultipartBodyPart("files[]", path)!!)
+        }
+        val okHttpClient = OkHttpClient.Builder().apply {
+            addInterceptor(
+                Interceptor { chain ->
+                    val builder = chain.request().newBuilder()
+                    builder.header("Content-Type", "application/json; charset=UTF-8")
+                    builder.header("Authorization", AppDefs.user.token!!)
+                    return@Interceptor chain.proceed(builder.build())
+                }
+            )
+        }.build()
+        val retrofit: Retrofit = Retrofit.Builder().baseUrl(Urls.BASE_URL).client(okHttpClient)
+            .addConverterFactory(GsonConverterFactory.create()).build()
+        val updateProfileCall: Call<BooleanResponse> =
+            retrofit.create(RetrofitAPIs::class.java).createPost(catId, desc, images)
+        updateProfileCall.enqueue(object : Callback<BooleanResponse> {
+            override fun onResponse(call: Call<BooleanResponse>, response: Response<BooleanResponse>) {
+                if (response.isSuccessful){
+                    Toast.makeText(mainActivity, resources.getString(R.string.post_created), Toast.LENGTH_SHORT).show()
+                    val intent = Intent(mainActivity, MainActivity::class.java)
+                    startActivity(intent)
+                    mainActivity.finish()
+                }else{
+                    val gson = Gson()
+                    val type = object : TypeToken<BooleanResponse>() {}.type //ErrorResponse is the data class that matches the error response
+                    val errorResponse = gson.fromJson<BooleanResponse>(response.errorBody()!!.charStream(), type) // errorResponse is an instance of ErrorResponse that will contain details about the error
+                    Toast.makeText(mainActivity, errorResponse.status.massage.toString(), Toast.LENGTH_SHORT).show()
+
+                }
+            }
+
+            override fun onFailure(call: Call<BooleanResponse>, t: Throwable) {
+                Toast.makeText(mainActivity, resources.getString(R.string.internet_connection), Toast.LENGTH_SHORT).show()
+            }
+
+        })
     }
 
     private fun fillUris(){
@@ -290,6 +348,7 @@ class PostDetailsFragment : Fragment() {
     }
 
     private fun createPost(file: String){
+
         val okHttpClient = OkHttpClient.Builder().apply {
             addInterceptor(
                 Interceptor { chain ->

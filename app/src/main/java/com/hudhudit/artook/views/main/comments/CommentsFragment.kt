@@ -236,7 +236,6 @@ class CommentsFragment : Fragment() {
     }
 
 
-
     private fun setMediaRV(){
         val adapter = PostMediaAdapter(this, post.posts_media)
         val layoutManager =

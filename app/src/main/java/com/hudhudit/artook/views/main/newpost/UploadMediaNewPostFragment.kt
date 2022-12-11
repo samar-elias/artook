@@ -172,6 +172,36 @@ class UploadMediaNewPostFragment : Fragment() {
             Glide.with(mainActivity).load(R.drawable.choose_media).into(binding.media5)
             Glide.with(mainActivity).load(R.drawable.choose_media).into(binding.media6)
         }else{
+            Glide.with(mainActivity).load(R.drawable.choose_media).into(binding.media1)
+            Glide.with(mainActivity).load(R.drawable.choose_media).into(binding.media2)
+            Glide.with(mainActivity).load(R.drawable.choose_media).into(binding.media3)
+            Glide.with(mainActivity).load(R.drawable.choose_media).into(binding.media4)
+            Glide.with(mainActivity).load(R.drawable.choose_media).into(binding.media5)
+            Glide.with(mainActivity).load(R.drawable.choose_media).into(binding.media6)
+            binding.deleteMedia1.visibility = View.GONE
+            binding.mediaType1.visibility = View.GONE
+            binding.mediaShadow1.visibility = View.GONE
+
+            binding.deleteMedia2.visibility = View.GONE
+            binding.mediaType2.visibility = View.GONE
+            binding.mediaShadow2.visibility = View.GONE
+
+            binding.deleteMedia3.visibility = View.GONE
+            binding.mediaType3.visibility = View.GONE
+            binding.mediaShadow3.visibility = View.GONE
+
+            binding.deleteMedia4.visibility = View.GONE
+            binding.mediaType4.visibility = View.GONE
+            binding.mediaShadow4.visibility = View.GONE
+
+            binding.deleteMedia5.visibility = View.GONE
+            binding.mediaType5.visibility = View.GONE
+            binding.mediaShadow5.visibility = View.GONE
+
+            binding.deleteMedia6.visibility = View.GONE
+            binding.mediaType6.visibility = View.GONE
+            binding.mediaShadow6.visibility = View.GONE
+
             for (index in mediaUris.indices){
                 when(index){
                     0 -> {

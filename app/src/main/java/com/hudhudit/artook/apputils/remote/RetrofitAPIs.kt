@@ -18,6 +18,7 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.http.*
+import java.util.ArrayList
 
 
 interface RetrofitAPIs {
@@ -146,6 +147,14 @@ interface RetrofitAPIs {
       fun createPost(@Field("category_id") category_id: String,
                      @Field("description") description: String,
                      @Field("files") image: String): Call<BooleanResponse>*/
+
+    @Multipart
+    @POST("create_posts2")
+    fun createPost(
+        @Part("category_id") category_id: RequestBody,
+        @Part("description") description: RequestBody,
+        @Part files: ArrayList<MultipartBody.Part>
+    ): Call<BooleanResponse>
 
     @FormUrlEncoded
     @POST("create_posts")

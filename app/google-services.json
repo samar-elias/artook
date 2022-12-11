@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "618031766593",
+    "firebase_url": "https://artook-6a8ca-default-rtdb.firebaseio.com",
     "project_id": "artook-6a8ca",
     "storage_bucket": "artook-6a8ca.appspot.com"
   },
@@ -13,6 +14,14 @@
         }
       },
       "oauth_client": [
+        {
+          "client_id": "618031766593-7j6i3fe2a3achh18skusl9mcjnkte8fu.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.hudhudit.artook",
+            "certificate_hash": "146d334119116e45f89ad2023351eb4f4facbe98"
+          }
+        },
         {
           "client_id": "618031766593-m2m3pu0l1oenkrk5s2r30t9h893e80d0.apps.googleusercontent.com",
           "client_type": 1,
@@ -37,6 +46,13 @@
             {
               "client_id": "618031766593-asp7kf7n0eit0u8au4rarsa702htid22.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "618031766593-2te7de8b0cbfgs0onf3596jtii9vvd5n.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.artook.app"
+              }
             }
           ]
         }
