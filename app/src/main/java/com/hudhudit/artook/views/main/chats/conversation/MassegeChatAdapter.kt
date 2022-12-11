@@ -29,6 +29,7 @@ class MessageChatAdapter(
 ) : BaseAdapter<MessageModel, BaseBindingViewHolder<MessageModel>>(marketSections) {
     var x = ""
     var y = ""
+    var todayCount=0
     override fun getViewHolder(parent: ViewGroup, viewType: Int): BaseBindingViewHolder<MessageModel> {
         return when (viewType) {
             VIEW_SENDER -> {
@@ -85,12 +86,21 @@ class MessageChatAdapter(
                 if (x == y) {
 
                     binding.tvDate.visibility = View.GONE
+
                 } else {
-                    binding.tvDate.visibility = View.VISIBLE
-                    binding.tvDate.text = getMyPrettyDate(
-                        originalString,context)
+
+                    if(getMyPrettyDate(originalString,context) == "Today"){
+                        binding.tvDate.visibility = View.GONE
+                    }else{
+                        binding.tvDate.visibility = View.VISIBLE
+                        binding.tvDate.text = getMyPrettyDate(
+                            originalString,context)
+                    }
+
+
                     x = y
                 }
+
 
             }
 
@@ -126,13 +136,21 @@ class MessageChatAdapter(
                 if (x == y) {
 
                     binding.tvDate.visibility = View.GONE
+
                 } else {
 
-                    binding.tvDate.visibility = View.VISIBLE
-                    binding.tvDate.text = getMyPrettyDate(
-                        originalString,context)
+                    if(getMyPrettyDate(originalString,context) == "Today"){
+                        binding.tvDate.visibility = View.GONE
+                    }else{
+                        binding.tvDate.visibility = View.VISIBLE
+                        binding.tvDate.text = getMyPrettyDate(
+                            originalString,context)
+                    }
+
+
                     x = y
                 }
+
 
             }
 

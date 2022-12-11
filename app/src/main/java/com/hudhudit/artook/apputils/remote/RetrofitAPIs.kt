@@ -1,6 +1,7 @@
 package com.hudhudit.artook.apputils.remote
 
 import com.hudhudit.artook.apputils.modules.booleanresponse.BooleanResponse
+import com.hudhudit.artook.apputils.modules.chat.TokenChatResponse
 import com.hudhudit.artook.apputils.modules.competition.*
 import com.hudhudit.artook.apputils.modules.notification.NotificationsResult
 import com.hudhudit.artook.apputils.modules.post.CommentsResult
@@ -302,5 +303,7 @@ interface RetrofitAPIs {
     @POST("add_contests_participat_vote")
     fun vote(@Field("contests_participat_id") contests_participat_id: String): Call<VoteResult>
 
+    @GET("get_client_token")
+    fun getClientToken(@Query("client_id") client_id: Int):Call<TokenChatResponse>
 
 }
