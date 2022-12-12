@@ -64,6 +64,16 @@ class PostMediaAdapter(
             }
         }
 
+        holder.video.setOnPreparedListener { mediaPlayer ->
+            val videoRatio = mediaPlayer.videoWidth / mediaPlayer.videoHeight.toFloat()
+            val screenRatio = holder.video.width / holder.video.height.toFloat()
+            val scaleX = videoRatio / screenRatio
+            if (scaleX >= 1f) {
+                holder.video.scaleX = scaleX
+            } else {
+                holder.video.scaleY = 1f / scaleX
+            }
+        }
     }
 
     override fun getItemCount(): Int {

@@ -16,6 +16,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import com.bumptech.glide.Glide
+import com.google.android.material.button.MaterialButton
 import com.google.android.material.card.MaterialCardView
 import com.hudhudit.artook.R
 import com.hudhudit.artook.apputils.appdefs.AppDefs.Companion.media1Uri
@@ -75,13 +76,7 @@ class UploadMediaNewPostFragment : Fragment() {
 
     private fun onClick(){
         binding.close.setOnClickListener {
-            media1Uri = null
-            media2Uri = null
-            media3Uri = null
-            media4Uri = null
-            media5Uri = null
-            media6Uri = null
-            mainActivity.supportFragmentManager.popBackStack()
+            cancelPostPopUp()
         }
         binding.media1CV.setOnClickListener {
             pickImagePopUp()
@@ -161,6 +156,34 @@ class UploadMediaNewPostFragment : Fragment() {
             setData()
         }
         binding.next.setOnClickListener { fillUris() }
+    }
+
+    private fun cancelPostPopUp(){
+        val alertView: View =
+            LayoutInflater.from(context).inflate(R.layout.close_new_post_popup, null)
+        val alertBuilder = AlertDialog.Builder(context).setView(alertView).show()
+        alertBuilder.show()
+        alertBuilder.setCancelable(false)
+
+        alertBuilder.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+        val cancelPost: MaterialButton = alertView.findViewById(R.id.cancel_post)
+        val close: ImageView = alertView.findViewById(R.id.close)
+
+        close.setOnClickListener {
+            alertBuilder.dismiss()
+        }
+
+        cancelPost.setOnClickListener {
+            alertBuilder.dismiss()
+            media1Uri = null
+            media2Uri = null
+            media3Uri = null
+            media4Uri = null
+            media5Uri = null
+            media6Uri = null
+            mainActivity.supportFragmentManager.popBackStack()
+        }
     }
 
     private fun setData(){
@@ -426,41 +449,6 @@ class UploadMediaNewPostFragment : Fragment() {
         fragmentTransaction.addToBackStack("PostDetails")
         fragmentTransaction.commit()
     }
-
-//    private fun createPost(){
-//        val okHttpClient = OkHttpClient.Builder().apply {
-//            addInterceptor(
-//                Interceptor { chain ->
-//                    val builder = chain.request().newBuilder()
-//                    builder.header("Content-Type", "application/json; charset=UTF-8")
-//                    builder.header("Authorization", AppDefs.user.token!!)
-//                    return@Interceptor chain.proceed(builder.build())
-//                }
-//            )
-//        }.build()
-//        val retrofit: Retrofit = Retrofit.Builder().baseUrl(Urls.BASE_URL).client(okHttpClient)
-//            .addConverterFactory(GsonConverterFactory.create()).build()
-//        val updateProfileCall: Call<BooleanResponse> =
-//            retrofit.create(RetrofitAPIs::class.java).createPost("1", "test", image1Path)
-//        updateProfileCall.enqueue(object : Callback<BooleanResponse> {
-//            override fun onResponse(call: Call<BooleanResponse>, response: Response<BooleanResponse>) {
-//                if (response.isSuccessful){
-//                    Toast.makeText(mainActivity, "Done", Toast.LENGTH_SHORT).show()
-//                }else{
-//                    val gson = Gson()
-//                    val type = object : TypeToken<BooleanResponse>() {}.type //ErrorResponse is the data class that matches the error response
-//                    val errorResponse = gson.fromJson<BooleanResponse>(response.errorBody()!!.charStream(), type) // errorResponse is an instance of ErrorResponse that will contain details about the error
-//                    Toast.makeText(mainActivity, errorResponse.status.massage.toString(), Toast.LENGTH_SHORT).show()
-//
-//                }
-//            }
-//
-//            override fun onFailure(call: Call<BooleanResponse>, t: Throwable) {
-//                Toast.makeText(mainActivity, resources.getString(R.string.internet_connection), Toast.LENGTH_SHORT).show()
-//            }
-//
-//        })
-//    }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
