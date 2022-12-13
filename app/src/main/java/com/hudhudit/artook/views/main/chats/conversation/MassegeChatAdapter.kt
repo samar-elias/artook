@@ -25,11 +25,12 @@ import java.util.*
 class MessageChatAdapter(
     private var marketSections: MutableList<MessageModel>,
     private var userChatModel: UserChatModel,
+    var todayCount:Int
 
 ) : BaseAdapter<MessageModel, BaseBindingViewHolder<MessageModel>>(marketSections) {
     var x = ""
     var y = ""
-    var todayCount=0
+
     override fun getViewHolder(parent: ViewGroup, viewType: Int): BaseBindingViewHolder<MessageModel> {
         return when (viewType) {
             VIEW_SENDER -> {
@@ -89,8 +90,9 @@ class MessageChatAdapter(
 
                 } else {
 
-                    if(getMyPrettyDate(originalString,context) == "Today"){
+                    if(getMyPrettyDate(originalString,context) == "Today" && todayCount >1){
                         binding.tvDate.visibility = View.GONE
+
                     }else{
                         binding.tvDate.visibility = View.VISIBLE
                         binding.tvDate.text = getMyPrettyDate(
@@ -139,7 +141,7 @@ class MessageChatAdapter(
 
                 } else {
 
-                    if(getMyPrettyDate(originalString,context) == "Today"){
+                    if(getMyPrettyDate(originalString,context) == "Today" && todayCount >1){
                         binding.tvDate.visibility = View.GONE
                     }else{
                         binding.tvDate.visibility = View.VISIBLE

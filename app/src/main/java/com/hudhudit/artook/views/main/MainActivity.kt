@@ -1,6 +1,7 @@
 package com.hudhudit.artook.views.main
 
 import android.content.ContentResolver
+import android.content.Context
 import android.database.Cursor
 import android.graphics.*
 import android.net.Uri
@@ -42,6 +43,7 @@ import java.util.zip.Deflater
 import java.util.zip.GZIPOutputStream
 
 import android.os.Environment
+import android.view.MotionEvent
 
 import androidx.exifinterface.media.ExifInterface
 import com.google.firebase.FirebaseApp
@@ -517,6 +519,13 @@ class MainActivity : AppCompatActivity() {
             inSampleSize++
         }
         return inSampleSize
+    }
+    override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {
+        if (currentFocus != null) {
+            val imm = this!!.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.hideSoftInputFromWindow(this!!.currentFocus!!.windowToken, 0)
+        }
+        return super.dispatchTouchEvent(ev)
     }
 
 }
