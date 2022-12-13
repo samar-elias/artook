@@ -17,6 +17,7 @@ import com.google.firebase.messaging.RemoteMessage
 import com.hudhudit.artook.R
 import com.hudhudit.artook.apputils.appdefs.Prefs
 import com.hudhudit.artook.views.main.MainActivity
+import com.hudhudit.artook.views.main.chats.ChatsFragment
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 @AndroidEntryPoint
@@ -64,7 +65,7 @@ class MyFirebaseMessagingService2 : FirebaseMessagingService() {
         message: String?
     ) {
         val ii: Intent
-        ii = Intent(context, MainActivity::class.java)
+        ii = Intent(applicationContext, MainActivity::class.java)
         ii.data = Uri.parse("custom://" + System.currentTimeMillis())
         ii.action = "actionstring" + System.currentTimeMillis()
         ii.flags = Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP

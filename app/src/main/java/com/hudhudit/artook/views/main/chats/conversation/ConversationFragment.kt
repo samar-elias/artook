@@ -1,13 +1,14 @@
 package com.hudhudit.artook.views.main.chats.conversation
 
+import android.app.Activity
 import android.content.Context
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -29,12 +30,10 @@ import com.hudhudit.artook.apputils.modules.booleanresponse.BooleanResponse
 import com.hudhudit.artook.apputils.modules.chat.MessageModel
 import com.hudhudit.artook.apputils.modules.chat.TokenChatResponse
 import com.hudhudit.artook.apputils.modules.chat.UserChatModel
-
 import com.hudhudit.artook.apputils.remote.RetrofitAPIs
 import com.hudhudit.artook.apputils.remote.utill.Resource
 import com.hudhudit.artook.databinding.FragmentConversationBinding
 import com.hudhudit.artook.views.main.MainActivity
-import com.hudhudit.artook.views.main.chats.ChatViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -44,6 +43,9 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.text.SimpleDateFormat
+import java.util.*
+
 
 @AndroidEntryPoint
 class ConversationFragment : Fragment() {
@@ -64,6 +66,7 @@ class ConversationFragment : Fragment() {
     var userId=""
     var recevertoken=""
     var userName=""
+    var todaycounts=0
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -79,10 +82,12 @@ class ConversationFragment : Fragment() {
         if (context is MainActivity) {
             mainActivity = context
         }
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         if (AppDefs.lang == "ar"){
             binding.toolbarLayout.navigateBack.scaleX = (-1).toFloat()
         }else{
@@ -201,31 +206,10 @@ class ConversationFragment : Fragment() {
                 if (it!!.status == Resource.Status.SUCCESS) {
                     messagesArrayList = it.data!!.toMutableList()
 
+                    showCount()
 
-
-                   /* if (count == "0") {
-                        messagesArrayList!!.forEach {
-                            it.isCheck = true
-                            it.whoBlock = viewModel.userChatModel!!.whoBlock
-                            it.status = viewModel.userChatModel!!.status.toString()
-
-                        }
-
-
-                    } else {
-                        //  Toast.makeText(requireContext(), count, Toast.LENGTH_SHORT).show()
-                        messagesArrayList!!.forEach {
-                            Log.d("myitem", x.toString() + "  " + (messagesArrayList!!.size - (count.toInt())))
-                            it.isCheck = x < messagesArrayList!!.size - (count.toInt())
-                            x += 1
-
-                        }
-
-                    }*/
-
-                    adapter = MessageChatAdapter(messagesArrayList!!,userChatModel)
+                    adapter = MessageChatAdapter(messagesArrayList!!,userChatModel,todaycounts)
                     iJustWantToScroll()
-
                     binding.messageRecyclerView.adapter = adapter
                     adapter.notifyDataSetChanged()
 
@@ -239,6 +223,18 @@ class ConversationFragment : Fragment() {
 
 
         })
+    }
+    fun showCount(){
+        val sdf = SimpleDateFormat("dd-MM-yyyy")
+        val currentDateAndTime = sdf.format(Date(System.currentTimeMillis()))
+        messagesArrayList!!.forEach {
+            if (sdf.format(it.messageTime!!.toLong()).toString() == currentDateAndTime.toString()){
+                todaycounts+=1
+            }
+
+
+        }
+        return
     }
 
     fun iJustWantToScroll() {
@@ -377,6 +373,7 @@ class ConversationFragment : Fragment() {
         requestQueue.add(request)
 
     }
+
 
 
 }
