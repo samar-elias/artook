@@ -14,8 +14,10 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.ImageView
 import android.widget.Toast
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -144,9 +146,9 @@ class CommentsFragment : Fragment() {
             val comment = binding.commentEdt.text.toString()
             if (comment.isNotEmpty()){
                 binding.commentEdt.setText("")
-                mainActivity.hideKeyboard()
                 addComment(post.id, comment)
             }
+            mainActivity.hideKeyboard()
         }
         binding.postLayout.options.setOnClickListener {
             if (isOptionsOpen){
@@ -178,6 +180,11 @@ class CommentsFragment : Fragment() {
                 post.is_save = "0"
                 Glide.with(mainActivity).load(R.drawable.save_post).into(binding.postLayout.save)
             }
+        }
+        binding.postLayout.comment.setOnClickListener {
+            binding.commentEdt.requestFocus()
+            val imm: InputMethodManager? = mainActivity.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager?
+            imm!!.showSoftInput(binding.commentEdt, InputMethodManager.SHOW_IMPLICIT)
         }
         binding.postLayout.report.setOnClickListener { reportPopUp(post.id) }
         binding.postLayout.delete.setOnClickListener { deletePopUp(post.id) }

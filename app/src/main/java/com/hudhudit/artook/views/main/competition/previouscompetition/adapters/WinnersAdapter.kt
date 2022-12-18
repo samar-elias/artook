@@ -31,7 +31,12 @@ class WinnersAdapter(
         val winner = winners[position]
 
         holder.participantName.text = (position+1).toString()+". "+winner.name
-        holder.participantPrize.text = winner.price+" JD"
+        if (winner.price.isNotEmpty()){
+            holder.participantPrize.text = winner.price+" JD"
+            holder.participantPrize.visibility = View.VISIBLE
+        }else{
+            holder.participantPrize.visibility = View.GONE
+        }
         if (winner.image.isNotEmpty()){
             Glide.with(context!!).load(winner.image).into(holder.contestImage)
         }

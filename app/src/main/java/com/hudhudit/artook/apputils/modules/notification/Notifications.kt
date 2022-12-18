@@ -6,4 +6,4 @@ data class Notifications(val count: String,
                          val data: ArrayList<Notification>)
 
 data class NotificationsResult(val status: Status,
-                               val results: Notifications)
+                               val results: Notifications?)

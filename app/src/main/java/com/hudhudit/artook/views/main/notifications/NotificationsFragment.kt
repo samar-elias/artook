@@ -123,10 +123,12 @@ class NotificationsFragment : Fragment() {
             override fun onResponse(call: Call<NotificationsResult>, response: Response<NotificationsResult>) {
                 binding.progressBar.visibility = View.GONE
                 if (response.isSuccessful){
-                    for (notification in response.body()!!.results.data){
-                        notifications.add(notification)
+                    if (response.body()!!.results != null){
+                        for (notification in response.body()!!.results!!.data){
+                            notifications.add(notification)
+                        }
+                        updateDisplay()
                     }
-                    updateDisplay()
                 }else{
                     val gson = Gson()
                     val type = object : TypeToken<UserData>() {}.type //ErrorResponse is the data class that matches the error response
@@ -175,6 +177,7 @@ class NotificationsFragment : Fragment() {
         notificationsCall.enqueue(object : Callback<BooleanResponse> {
             override fun onResponse(call: Call<BooleanResponse>, response: Response<BooleanResponse>) {
                 if (response.isSuccessful){
+                    page = 1
                     notifications.clear()
                     getNotifications()
                 }else{

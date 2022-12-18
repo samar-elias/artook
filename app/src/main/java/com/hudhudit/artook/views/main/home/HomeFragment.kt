@@ -80,8 +80,12 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         onClick()
         getOpenedNotifications()
-        getPosts()
-        posts.clear()
+        if (posts.size == 0){
+            posts.clear()
+            getPosts(AppDefs.homePage)
+        }else{
+            setPostsRV()
+        }
         mainActivity.visibleBottomBar()
         mainActivity.isHome = true
         AppDefs.media1Uri = null
@@ -97,20 +101,21 @@ class HomeFragment : Fragment() {
         binding.toolbarLayout.newPost.setOnClickListener { navigateToNewPost() }
         binding.postsNSV.setOnScrollChangeListener { v: NestedScrollView, scrollX: Int, scrollY: Int, oldScrollX: Int, oldScrollY: Int ->
             if (scrollY == v.getChildAt(0).measuredHeight - v.measuredHeight) {
-                page++
-                getPosts()
+                val pageNumber = page +1
+                getPosts(pageNumber)
             }
         }
         binding.startSearching.setOnClickListener { navigateToSearch() }
         binding.refreshLayout.setOnRefreshListener {
+            page = 1
             posts.clear()
             getOpenedNotifications()
-            getPosts()
+            getPosts(page)
             binding.refreshLayout.isRefreshing = false
         }
     }
 
-    private fun getPosts(){
+    private fun getPosts(pageNumber: Int){
         binding.progressBar.visibility = View.VISIBLE
         val okHttpClient = OkHttpClient.Builder().apply {
             addInterceptor(
@@ -126,11 +131,14 @@ class HomeFragment : Fragment() {
         val retrofit: Retrofit = Retrofit.Builder().baseUrl(Urls.BASE_URL).client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create()).build()
         val postsCall: Call<PostsResult> =
-            retrofit.create(RetrofitAPIs::class.java).getHomePosts(page.toString())
+            retrofit.create(RetrofitAPIs::class.java).getHomePosts(pageNumber.toString())
         postsCall.enqueue(object : Callback<PostsResult> {
             override fun onResponse(call: Call<PostsResult>, response: Response<PostsResult>) {
                 binding.progressBar.visibility = View.GONE
                 if (response.isSuccessful){
+                    if (response.body()!!.results!!.data.size >0){
+                        page = pageNumber
+                    }
                     for (post in response.body()!!.results!!.data){
                         posts.add(post)
                     }
@@ -142,9 +150,9 @@ class HomeFragment : Fragment() {
                     }
                 }else{
                     val gson = Gson()
-                    val type = object : TypeToken<UserData>() {}.type //ErrorResponse is the data class that matches the error response
-                    val errorResponse = gson.fromJson<UserData>(response.errorBody()!!.charStream(), type) // errorResponse is an instance of ErrorResponse that will contain details about the error
-//                    Toast.makeText(mainActivity, errorResponse.status.massage.toString(), Toast.LENGTH_SHORT).show()
+                    val type = object : TypeToken<BooleanResponse>() {}.type //ErrorResponse is the data class that matches the error response
+                    val errorResponse = gson.fromJson<BooleanResponse>(response.errorBody()!!.charStream(), type) // errorResponse is an instance of ErrorResponse that will contain details about the error
+                    Toast.makeText(mainActivity, errorResponse.status.massage.toString(), Toast.LENGTH_SHORT).show()
                     binding.emptyWallLayout.visibility = View.VISIBLE
                     binding.toolbarLine.visibility = View.GONE
                 }
@@ -165,6 +173,7 @@ class HomeFragment : Fragment() {
         val adapter = PostsAdapter(this, posts)
         binding.postsRV.adapter = adapter
         binding.postsRV.layoutManager = LinearLayoutManager(mainActivity)
+        binding.postsRV.scrollToPosition(AppDefs.homePosition)
     }
 
     fun likePost(post: Post){
@@ -524,7 +533,7 @@ class HomeFragment : Fragment() {
         })
     }
 
-    fun openPost(post: Post){
+    fun openPost(post: Post, position: Int){
         if (mainActivity.isHome){
             val fragment: Fragment = CommentsFragment()
             val fragmentManager: FragmentManager = mainActivity.supportFragmentManager
@@ -535,6 +544,8 @@ class HomeFragment : Fragment() {
             fragmentTransaction.replace(R.id.container, fragment)
             fragmentTransaction.addToBackStack("Post")
             fragmentTransaction.commit()
+            AppDefs.homePage = page
+            AppDefs.homePosition = position
         }
     }
 
@@ -633,4 +644,5 @@ class HomeFragment : Fragment() {
 
         })
     }
+
 }

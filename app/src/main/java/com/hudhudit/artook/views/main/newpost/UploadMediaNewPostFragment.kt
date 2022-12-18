@@ -76,7 +76,17 @@ class UploadMediaNewPostFragment : Fragment() {
 
     private fun onClick(){
         binding.close.setOnClickListener {
-            cancelPostPopUp()
+            if (mediaUris.size > 0){
+                cancelPostPopUp()
+            }else{
+                media1Uri = null
+                media2Uri = null
+                media3Uri = null
+                media4Uri = null
+                media5Uri = null
+                media6Uri = null
+                mainActivity.supportFragmentManager.popBackStack()
+            }
         }
         binding.media1CV.setOnClickListener {
             pickImagePopUp()
@@ -355,10 +365,21 @@ class UploadMediaNewPostFragment : Fragment() {
             alertBuilder.dismiss()
         }
         videos.setOnClickListener {
-            val intent = Intent(Intent.ACTION_PICK)
-            intent.type = "video/*"
-            startActivityForResult(intent, REQUEST_TAKE_GALLERY_VIDEO)
-            alertBuilder.dismiss()
+            var count = 0
+            for (media in mediaUris){
+                if (media.mediaType == "1"){
+                    count++
+                }
+            }
+
+            if (count<2){
+                val intent = Intent(Intent.ACTION_PICK)
+                intent.type = "video/*"
+                startActivityForResult(intent, REQUEST_TAKE_GALLERY_VIDEO)
+                alertBuilder.dismiss()
+            }else{
+                Toast.makeText(mainActivity, resources.getString(R.string.reached_max_videos), Toast.LENGTH_SHORT).show()
+            }
         }
         close.setOnClickListener { alertBuilder.dismiss() }
 

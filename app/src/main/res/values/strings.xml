@@ -166,5 +166,6 @@
     <string name="google_signup_failed">Google sign up failed!</string>
     <string name="cancel_post">Cancel Post</string>
     <string name="are_you_sure_you_want_to_cancel_this_post">Are you sure you want to cancel this post?</string>
+    <string name="reached_max_videos">Maximum videos 2!</string>
 
 </resources>

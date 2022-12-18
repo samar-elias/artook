@@ -74,16 +74,24 @@ class VideosArticlesFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        articles.clear()
-        videos.clear()
-        videosGroups.clear()
         mainActivity.isHome = false
         onClick()
         getOpenedNotifications()
         getCounts()
         mainActivity.visibleBottomBar()
         if (getData){
-            getVideos()
+            if (videos.size == 0){
+                videos.clear()
+                videosGroups.clear()
+                getVideos()
+            }
+            if (isVideos){
+                binding.articles.alpha = 0.5F
+                binding.videos.alpha = 1F
+            }else{
+                binding.articles.alpha = 1F
+                binding.videos.alpha = 0.5F
+            }
         }
         AppDefs.media1Uri = null
         AppDefs.media2Uri = null

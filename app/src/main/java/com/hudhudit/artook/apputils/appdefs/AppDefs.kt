@@ -21,6 +21,8 @@ class AppDefs  {
         var media5Uri: Uri? = null
         var media6Uri: Uri? = null
         lateinit var user: UserData
+        var homePage = 1
+        var homePosition = 0
 
         @JvmName("getLanguage1")
         fun getLanguage(): String? {

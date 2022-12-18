@@ -66,7 +66,7 @@ class PostsAdapter(
             holder.report.visibility = View.VISIBLE
         }
 
-        val adapter = PostMediaAdapter(homeFragment, post, post.posts_media)
+        val adapter = PostMediaAdapter(homeFragment, post, position, post.posts_media)
         val mSnapHelper: SnapHelper = PagerSnapHelper()
         mSnapHelper.attachToRecyclerView(holder.mediaRV)
         holder.mediaRV.onFlingListener = null
@@ -111,7 +111,7 @@ class PostsAdapter(
 
         holder.edit.setOnClickListener { homeFragment.updatePopUp(post) }
 
-        holder.itemView.setOnClickListener { homeFragment.openPost(post) }
+        holder.itemView.setOnClickListener { homeFragment.openPost(post, position) }
 
         holder.share.setOnClickListener { homeFragment.shareApp() }
 
