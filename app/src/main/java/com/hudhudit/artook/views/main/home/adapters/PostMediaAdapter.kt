@@ -19,6 +19,7 @@ import com.hudhudit.artook.views.main.home.HomeFragment
 class PostMediaAdapter(
     private var homeFragment: HomeFragment,
     private var post: Post,
+    private var position: Int,
     private var postMedia: ArrayList<PostMedia>
 ) :
     RecyclerView.Adapter<PostMediaAdapter.ViewHolder>() {
@@ -34,7 +35,9 @@ class PostMediaAdapter(
         val media = postMedia[position]
         if (media.media.endsWith(".mp4")){
             holder.videoLayout.visibility = View.VISIBLE
-            holder.image.visibility = View.GONE
+            holder.image.visibility = View.VISIBLE
+            holder.play.visibility = View.VISIBLE
+            Glide.with(context!!).load(media.media).into(holder.image)
             try {
                 val link = media.media
                 val video: Uri = Uri.parse(link)
@@ -46,11 +49,12 @@ class PostMediaAdapter(
         }else{
             holder.videoLayout.visibility = View.GONE
             holder.image.visibility = View.VISIBLE
+            holder.play.visibility = View.GONE
             Glide.with(context!!).load(media.media).into(holder.image)
         }
         holder.mediaCounter.text = (position+1).toString()+"/"+postMedia.size
 
-        holder.itemView.setOnClickListener { homeFragment.openPost(post) }
+        holder.itemView.setOnClickListener { homeFragment.openPost(post, position) }
 
         holder.video.setOnClickListener { holder.video.start() }
 
@@ -61,6 +65,7 @@ class PostMediaAdapter(
             }else{
                 Glide.with(context!!).load(R.drawable.pause).into(holder.playIcon)
                 holder.video.start()
+                holder.image.visibility = View.GONE
             }
         }
 

@@ -129,7 +129,7 @@ class ProfileFragment : Fragment() {
             posts.clear()
             isFeeds = false
             page = 1
-            Glide.with(mainActivity).load(resources.getDrawable(R.drawable.selected_saved)).into(binding.savedIcon)
+            Glide.with(mainActivity).load(resources.getDrawable(R.drawable.selected_save_post)).into(binding.savedIcon)
             binding.savedTxt.setTextColor(resources.getColor(R.color.black))
             Glide.with(mainActivity).load(resources.getDrawable(R.drawable.unselected_feeds)).into(binding.feedIcon)
             binding.feedTxt.setTextColor(resources.getColor(R.color.gray))

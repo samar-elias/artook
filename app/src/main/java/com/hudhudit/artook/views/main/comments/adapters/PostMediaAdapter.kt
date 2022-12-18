@@ -34,7 +34,9 @@ class PostMediaAdapter(
         if (media.media.endsWith(".mp4")){
             commentsFragment.videoPosition = position
             holder.videoLayout.visibility = View.VISIBLE
-            holder.image.visibility = View.GONE
+            holder.image.visibility = View.VISIBLE
+            holder.play.visibility = View.VISIBLE
+            Glide.with(context!!).load(media.media).into(holder.image)
             try {
                 val link = media.media
 //                val mediaController = MediaController(context)
@@ -49,6 +51,7 @@ class PostMediaAdapter(
         }else{
             holder.videoLayout.visibility = View.GONE
             holder.image.visibility = View.VISIBLE
+            holder.play.visibility = View.GONE
             Glide.with(context!!).load(media.media).into(holder.image)
         }
         holder.mediaCounter.text = (position+1).toString()+"/"+postMedia.size
@@ -62,6 +65,7 @@ class PostMediaAdapter(
             }else{
                 Glide.with(context!!).load(R.drawable.pause).into(holder.playIcon)
                 holder.video.start()
+                holder.image.visibility = View.GONE
             }
         }
 

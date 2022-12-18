@@ -21,7 +21,6 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="@id/user_img"
-        app:layout_constraintBottom_toBottomOf="@id/user_img"
         app:layout_constraintStart_toEndOf="@id/user_img"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginStart="@dimen/_10sdp"
@@ -30,7 +29,7 @@
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="vertical">
             <TextView
                 android:id="@+id/user_name"
                 android:layout_width="wrap_content"
@@ -46,18 +45,18 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toEndOf="@id/user_info_layout"
-                android:layout_marginStart="@dimen/_5sdp"
                 tools:text="Great Painting!"
                 android:textAlignment="viewStart"
                 android:fontFamily="@font/gill_sans_regular"
                 android:textSize="@dimen/_10ssp"
-                android:textColor="@color/dark_gray"/>
+                android:layout_marginTop="@dimen/_3sdp"
+                android:textColor="@color/black"/>
         </androidx.appcompat.widget.LinearLayoutCompat>
         <TextView
             android:id="@+id/comment_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_7sdp"
+            android:layout_marginTop="@dimen/_3sdp"
             tools:text="1 day"
             android:textAlignment="viewStart"
             android:fontFamily="@font/gill_sans_regular"
